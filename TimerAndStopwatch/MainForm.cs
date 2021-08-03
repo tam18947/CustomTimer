@@ -40,6 +40,7 @@ namespace TimerAndStopwatch
             waveFile1 = @"wav\chime1.wav";
             waveFile2 = @"wav\chime2.wav";
             waveFile3 = @"wav\chime3.wav";
+            isStandBy = true;
         }
 
         /// <summary>
@@ -59,6 +60,7 @@ namespace TimerAndStopwatch
         private bool isCountdown;
         private int volume;
         private string waveFile1, waveFile2, waveFile3;
+        private bool isStandBy;
 
         private void MainForm_Resize(object sender, EventArgs e)
         {
@@ -138,7 +140,7 @@ namespace TimerAndStopwatch
             { TimerReset(); }
         }
 
-        private void TimeSettingToolStripMenuItem_Click(object sender, EventArgs e)
+        private void AdvSettingToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Setting setting = new Setting
             {
@@ -254,7 +256,8 @@ namespace TimerAndStopwatch
             if (colorDialog1.ShowDialog() == DialogResult.OK)
             {
                 initColor = colorDialog1.Color;
-                if (timeSettingToolStripMenuItem.Enabled)
+                //if (advSettingToolStripMenuItem.Enabled)
+                if (isStandBy)
                 { BackColor = colorDialog1.Color; }
             }
         }
@@ -386,7 +389,8 @@ namespace TimerAndStopwatch
         /// </summary>
         private void StartStop()
         {
-            timeSettingToolStripMenuItem.Enabled = false;
+            //advSettingToolStripMenuItem.Enabled = false;
+            isStandBy = false;
             if (timerSW.Enabled)
             {
                 // タイマーを停止する
@@ -416,7 +420,8 @@ namespace TimerAndStopwatch
             startStopToolStripMenuItem.Text = "開始（ダブルクリック）";
             ControlSizeChange(labelTime);
             BackColor = initColor;
-            timeSettingToolStripMenuItem.Enabled = true;
+            //advSettingToolStripMenuItem.Enabled = true;
+            isStandBy = true;
             timeCnt = 0;
         }
 
