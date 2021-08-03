@@ -35,9 +35,10 @@
             this.startStopToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.resetRestartToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.topMostToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.settingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.advSettingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.fontToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.initBackColorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.countdownToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
@@ -53,8 +54,7 @@
             this.fontDialog1 = new System.Windows.Forms.FontDialog();
             this.colorDialog1 = new System.Windows.Forms.ColorDialog();
             this.timerClick = new System.Windows.Forms.Timer(this.components);
-            this.fontToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.initBackColorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.topMostToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.contextMenuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -84,7 +84,7 @@
             this.toolStripSeparator2,
             this.closeToolStripMenuItem});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(202, 126);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(202, 148);
             // 
             // startStopToolStripMenuItem
             // 
@@ -105,15 +105,6 @@
             this.toolStripSeparator1.Name = "toolStripSeparator1";
             this.toolStripSeparator1.Size = new System.Drawing.Size(198, 6);
             // 
-            // topMostToolStripMenuItem
-            // 
-            this.topMostToolStripMenuItem.Checked = true;
-            this.topMostToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.topMostToolStripMenuItem.Name = "topMostToolStripMenuItem";
-            this.topMostToolStripMenuItem.Size = new System.Drawing.Size(201, 22);
-            this.topMostToolStripMenuItem.Text = "最前面";
-            this.topMostToolStripMenuItem.Click += new System.EventHandler(this.TopMostToolStripMenuItem_Click);
-            // 
             // settingToolStripMenuItem
             // 
             this.settingToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -122,12 +113,12 @@
             this.initBackColorToolStripMenuItem,
             this.toolStripSeparator3,
             this.countdownToolStripMenuItem,
+            this.volumeToolStripMenuItem,
             this.toolStripSeparator4,
             this.time1ToolStripMenuItem,
             this.time2ToolStripMenuItem,
             this.time3ToolStripMenuItem,
             this.toolStripSeparator5,
-            this.volumeToolStripMenuItem,
             this.volumeTestToolStripMenuItem});
             this.settingToolStripMenuItem.Name = "settingToolStripMenuItem";
             this.settingToolStripMenuItem.Size = new System.Drawing.Size(201, 22);
@@ -139,6 +130,20 @@
             this.advSettingToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.advSettingToolStripMenuItem.Text = "詳細設定...";
             this.advSettingToolStripMenuItem.Click += new System.EventHandler(this.AdvSettingToolStripMenuItem_Click);
+            // 
+            // fontToolStripMenuItem
+            // 
+            this.fontToolStripMenuItem.Name = "fontToolStripMenuItem";
+            this.fontToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.fontToolStripMenuItem.Text = "フォント...";
+            this.fontToolStripMenuItem.Click += new System.EventHandler(this.FontToolStripMenuItem_Click);
+            // 
+            // initBackColorToolStripMenuItem
+            // 
+            this.initBackColorToolStripMenuItem.Name = "initBackColorToolStripMenuItem";
+            this.initBackColorToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.initBackColorToolStripMenuItem.Text = "初期背景色...";
+            this.initBackColorToolStripMenuItem.Click += new System.EventHandler(this.InitBackColorToolStripMenuItem_Click);
             // 
             // toolStripSeparator3
             // 
@@ -229,19 +234,14 @@
             // 
             this.timerClick.Tick += new System.EventHandler(this.TimerClick_Tick);
             // 
-            // fontToolStripMenuItem
+            // topMostToolStripMenuItem
             // 
-            this.fontToolStripMenuItem.Name = "fontToolStripMenuItem";
-            this.fontToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.fontToolStripMenuItem.Text = "フォント...";
-            this.fontToolStripMenuItem.Click += new System.EventHandler(this.FontToolStripMenuItem_Click);
-            // 
-            // initBackColorToolStripMenuItem
-            // 
-            this.initBackColorToolStripMenuItem.Name = "initBackColorToolStripMenuItem";
-            this.initBackColorToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.initBackColorToolStripMenuItem.Text = "初期背景色...";
-            this.initBackColorToolStripMenuItem.Click += new System.EventHandler(this.InitBackColorToolStripMenuItem_Click);
+            this.topMostToolStripMenuItem.Checked = true;
+            this.topMostToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.topMostToolStripMenuItem.Name = "topMostToolStripMenuItem";
+            this.topMostToolStripMenuItem.Size = new System.Drawing.Size(201, 22);
+            this.topMostToolStripMenuItem.Text = "最前面";
+            this.topMostToolStripMenuItem.Click += new System.EventHandler(this.TopMostToolStripMenuItem_Click);
             // 
             // MainForm
             // 
@@ -273,7 +273,6 @@
         private System.Windows.Forms.Label labelTime;
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
         private System.Windows.Forms.ToolStripMenuItem closeToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem topMostToolStripMenuItem;
         private System.Windows.Forms.Timer timerSW;
         private System.Windows.Forms.FontDialog fontDialog1;
         private System.Windows.Forms.ColorDialog colorDialog1;
@@ -295,6 +294,7 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
         private System.Windows.Forms.ToolStripMenuItem fontToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem initBackColorToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem topMostToolStripMenuItem;
     }
 }
 
