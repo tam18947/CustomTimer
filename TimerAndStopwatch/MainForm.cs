@@ -28,7 +28,7 @@ namespace TimerAndStopwatch
             time3ToolStripMenuItem.ForeColor = labelTime.ForeColor;
             tsCountdown = new TimeSpan(0, 3, 0);
             isCountdown = false;
-            countdownToolStripMenuItem.Text = String_TrueDown_FalseUp(isCountdown);
+            countdownToolStripMenuItem.Text = String_ChangeToCountUpOrCountDown(isCountdown);
             ts1 = new TimeSpan(0, 1, 0);
             ts2 = new TimeSpan(0, 2, 0);
             ts3 = new TimeSpan(0, 3, 0);
@@ -134,7 +134,7 @@ namespace TimerAndStopwatch
         private void CountdownToolStripMenuItem_Click(object sender, EventArgs e)
         {
             isCountdown = !isCountdown;
-            countdownToolStripMenuItem.Text = String_TrueDown_FalseUp(isCountdown);
+            countdownToolStripMenuItem.Text = String_ChangeToCountUpOrCountDown(isCountdown);
             // 未計測なら表示を初期化
             if (!timerSW.Enabled)
             { TimerReset(); }
@@ -195,7 +195,7 @@ namespace TimerAndStopwatch
                 // 機能
                 tsCountdown = setting.TimeSpanCountdown;
                 isCountdown = setting.IsCountdown;
-                countdownToolStripMenuItem.Text = String_TrueDown_FalseUp(isCountdown);
+                countdownToolStripMenuItem.Text = String_ChangeToCountUpOrCountDown(isCountdown);
                 if (!timerSW.Enabled)
                 { TimerReset(); }
             }
@@ -432,11 +432,11 @@ namespace TimerAndStopwatch
         /// <returns></returns>
         private string TimeSpanToString(TimeSpan ts) => ts.ToString(@"h\:mm\:ss");
         /// <summary>
-        /// True=>CountDown, False=>CountUpをStringで出力
+        /// True -> CountUp, False -> CountDown をStringで出力
         /// </summary>
         /// <param name="isCountdown"></param>
         /// <returns></returns>
-        private string String_TrueDown_FalseUp(bool isCountdown) => isCountdown ? "カウントダウン " + TimeSpanToString(tsCountdown) : "カウントアップ";
+        private string String_ChangeToCountUpOrCountDown(bool isCountdown) => "カウント" + (isCountdown ? "アップ" : "ダウン") + "に変更";
 
         #region フォームの移動，クリックタイマー開始，停止
         /// <summary>
