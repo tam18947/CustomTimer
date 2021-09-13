@@ -1,4 +1,4 @@
-# TimerAndStopwatch
+# Timer
 
 ## 実行ファイル
 bin/Release/TimerAndStopwatch.exe<br>
