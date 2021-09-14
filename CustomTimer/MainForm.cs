@@ -665,7 +665,8 @@ namespace CustomTimer
                 this.Left = newPosition.Left;
                 this.Top = newPosition.Top;
             }
-            else if (previousPoint == Cursor.Position)
+
+            if (previousPoint == Cursor.Position)
             {
                 // 前回と今回のカーソル位置が同じ場合は何もしない
                 return;
