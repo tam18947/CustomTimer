@@ -1,7 +1,4 @@
-# Timer
-
-## 実行ファイル
-bin/Release/TimerAndStopwatch.exe<br>
+# CustomTimer
 
 ## 開始・一時停止・再開
 ・ダブルクリック  
