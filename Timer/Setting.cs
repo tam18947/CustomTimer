@@ -2,7 +2,7 @@
 using System.Drawing;
 using System.Windows.Forms;
 
-namespace Timer
+namespace CustomTimer
 {
     public partial class Setting : Form
     {
