@@ -1,5 +1,5 @@
 ﻿
-namespace Timer
+namespace CustomTimer
 {
     partial class Setting
     {
