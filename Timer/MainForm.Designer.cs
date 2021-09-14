@@ -1,4 +1,4 @@
-﻿namespace TimerAndStopwatch
+﻿namespace Timer
 {
     partial class MainForm
     {
