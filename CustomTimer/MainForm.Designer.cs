@@ -52,7 +52,7 @@
             this.volumeTestToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.closeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.timerSW = new System.Windows.Forms.Timer(this.components);
+            this.mainTimer = new System.Windows.Forms.Timer(this.components);
             this.fontDialog1 = new System.Windows.Forms.FontDialog();
             this.colorDialog1 = new System.Windows.Forms.ColorDialog();
             this.timerClick = new System.Windows.Forms.Timer(this.components);
@@ -87,7 +87,7 @@
             this.toolStripSeparator2,
             this.closeToolStripMenuItem});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(202, 170);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(202, 148);
             // 
             // startStopToolStripMenuItem
             // 
@@ -241,9 +241,9 @@
             this.closeToolStripMenuItem.Text = "終了";
             this.closeToolStripMenuItem.Click += new System.EventHandler(this.CloseToolStripMenuItem_Click);
             // 
-            // timerSW
+            // mainTimer
             // 
-            this.timerSW.Tick += new System.EventHandler(this.TimerSW_Tick);
+            this.mainTimer.Tick += new System.EventHandler(this.MainTimer_Tick);
             // 
             // fontDialog1
             // 
@@ -287,7 +287,7 @@
         private System.Windows.Forms.Label labelTime;
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
         private System.Windows.Forms.ToolStripMenuItem closeToolStripMenuItem;
-        private System.Windows.Forms.Timer timerSW;
+        private System.Windows.Forms.Timer mainTimer;
         private System.Windows.Forms.FontDialog fontDialog1;
         private System.Windows.Forms.ColorDialog colorDialog1;
         private System.Windows.Forms.ToolStripMenuItem startStopToolStripMenuItem;
