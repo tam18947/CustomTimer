@@ -1,4 +1,4 @@
-﻿namespace Timer
+﻿namespace CustomTimer
 {
     partial class MainForm
     {
@@ -36,6 +36,7 @@
             this.resetRestartToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.topMostToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.maximizeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.settingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.advSettingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.fontToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -55,7 +56,7 @@
             this.fontDialog1 = new System.Windows.Forms.FontDialog();
             this.colorDialog1 = new System.Windows.Forms.ColorDialog();
             this.timerClick = new System.Windows.Forms.Timer(this.components);
-            this.maximizeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.cursorTimer = new System.Windows.Forms.Timer(this.components);
             this.contextMenuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -115,6 +116,13 @@
             this.topMostToolStripMenuItem.Size = new System.Drawing.Size(201, 22);
             this.topMostToolStripMenuItem.Text = "最前面";
             this.topMostToolStripMenuItem.Click += new System.EventHandler(this.TopMostToolStripMenuItem_Click);
+            // 
+            // maximizeToolStripMenuItem
+            // 
+            this.maximizeToolStripMenuItem.Name = "maximizeToolStripMenuItem";
+            this.maximizeToolStripMenuItem.Size = new System.Drawing.Size(201, 22);
+            this.maximizeToolStripMenuItem.Text = "最大化";
+            this.maximizeToolStripMenuItem.Click += new System.EventHandler(this.MaximizeToolStripMenuItem_Click);
             // 
             // settingToolStripMenuItem
             // 
@@ -245,12 +253,9 @@
             // 
             this.timerClick.Tick += new System.EventHandler(this.TimerClick_Tick);
             // 
-            // maximizeToolStripMenuItem
+            // cursorTimer
             // 
-            this.maximizeToolStripMenuItem.Name = "maximizeToolStripMenuItem";
-            this.maximizeToolStripMenuItem.Size = new System.Drawing.Size(201, 22);
-            this.maximizeToolStripMenuItem.Text = "最大化";
-            this.maximizeToolStripMenuItem.Click += new System.EventHandler(this.MaximizeToolStripMenuItem_Click);
+            this.cursorTimer.Tick += new System.EventHandler(this.CursorTimer_Tick);
             // 
             // MainForm
             // 
@@ -305,6 +310,7 @@
         private System.Windows.Forms.ToolStripMenuItem initBackColorToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem topMostToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem maximizeToolStripMenuItem;
+        private System.Windows.Forms.Timer cursorTimer;
     }
 }
 
