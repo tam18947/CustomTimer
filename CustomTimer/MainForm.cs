@@ -148,7 +148,7 @@ namespace CustomTimer
             isCountdown = !isCountdown;
             countdownToolStripMenuItem.Text = String_ChangeToCountUpOrCountDown(isCountdown);
             // 未計測なら表示を初期化
-            if (!timerSW.Enabled)
+            if (!mainTimer.Enabled)
             { TimerReset(); }
         }
 
@@ -208,7 +208,7 @@ namespace CustomTimer
                 tsCountdown = setting.TimeSpanCountdown;
                 isCountdown = setting.IsCountdown;
                 countdownToolStripMenuItem.Text = String_ChangeToCountUpOrCountDown(isCountdown);
-                if (!timerSW.Enabled)
+                if (!mainTimer.Enabled)
                 { TimerReset(); }
             }
         }
@@ -334,7 +334,7 @@ namespace CustomTimer
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void TimerSW_Tick(object sender, EventArgs e)
+        private void MainTimer_Tick(object sender, EventArgs e)
         {
             // カウントダウン表示の場合
             if (isCountdown)
@@ -433,10 +433,10 @@ namespace CustomTimer
         {
             //advSettingToolStripMenuItem.Enabled = false;
             isStandBy = false;
-            if (timerSW.Enabled)
+            if (mainTimer.Enabled)
             {
                 // タイマーを停止する
-                timerSW.Stop();
+                mainTimer.Stop();
                 // ストップウォッチを止める
                 sw.Stop();
                 startStopToolStripMenuItem.Text = "再開（ダブルクリック）";
@@ -444,7 +444,7 @@ namespace CustomTimer
             else
             {
                 // タイマーを開始する
-                timerSW.Start();
+                mainTimer.Start();
                 // ストップウォッチを開始する
                 sw.Start();
                 startStopToolStripMenuItem.Text = "一時停止（ダブルクリック）";
@@ -456,7 +456,7 @@ namespace CustomTimer
         /// </summary>
         private void TimerReset()
         {
-            timerSW.Stop();
+            mainTimer.Stop();
             sw.Reset();
             labelTime.Text = isCountdown ? TimeSpanToString(tsCountdown) : TimeSpanToString(new TimeSpan());
             startStopToolStripMenuItem.Text = "開始（ダブルクリック）";
