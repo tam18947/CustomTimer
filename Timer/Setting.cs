@@ -2,7 +2,7 @@
 using System.Drawing;
 using System.Windows.Forms;
 
-namespace TimerAndStopwatch
+namespace Timer
 {
     public partial class Setting : Form
     {
