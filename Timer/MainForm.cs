@@ -5,7 +5,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Media;
 
-namespace Timer
+namespace CustomTimer
 {
     public partial class MainForm : Form
     {
@@ -41,6 +41,13 @@ namespace Timer
             waveFile2 = @"wav\chime2.wav";
             waveFile3 = @"wav\chime3.wav";
             isStandBy = true;
+
+            isHiddenCursor = false;
+            previousPoint = Cursor.Position;
+
+            // カーソルを隠すためのタイマー生成
+            cursorTimer.Interval = HIDE_CURSOR_TIME;
+            cursorTimer.Start();
         }
 
         /// <summary>
@@ -61,6 +68,11 @@ namespace Timer
         private int volume;
         private string waveFile1, waveFile2, waveFile3;
         private bool isStandBy;
+
+        //private readonly Timer cursorTimer; // カーソルを隠すためのタイマー
+        private const int HIDE_CURSOR_TIME = 2000; // カーソルを隠すミリ秒数
+        private bool isHiddenCursor; // カーソルが隠れているか
+        private Point previousPoint; // 前回のカーソル位置
 
         private void MainForm_Resize(object sender, EventArgs e)
         {
@@ -284,6 +296,18 @@ namespace Timer
         {
             Close();
         }
+
+        private void CursorTimer_Tick(object sender, EventArgs e)
+        {
+            cursorTimer.Stop();
+
+            if (!isHiddenCursor && !contextMenuStrip1.Visible)
+            {
+                // カーソルが隠れていない時のみ、カーソルを隠す
+                Cursor.Hide();
+                isHiddenCursor = true;
+            }
+        }
         #endregion
 
         /// <summary>
@@ -506,6 +530,22 @@ namespace Timer
                     }
                 }
             }
+            // それ以外
+            else
+            {
+                ShowCursor();
+            }
+        }
+
+        private void ShowCursor()
+        {
+            cursorTimer.Stop();
+            if (isHiddenCursor)
+            {
+                // カーソルが隠れている時のみ、カーソルを表示する
+                Cursor.Show();
+                isHiddenCursor = false;
+            }
         }
 
         /// <summary>
@@ -625,6 +665,15 @@ namespace Timer
                 this.Left = newPosition.Left;
                 this.Top = newPosition.Top;
             }
+            else if (previousPoint == Cursor.Position)
+            {
+                // 前回と今回のカーソル位置が同じ場合は何もしない
+                return;
+            }
+            previousPoint = Cursor.Position;
+
+            ShowCursor();
+            cursorTimer.Start();
         }
         #endregion
 
