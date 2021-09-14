@@ -1,7 +1,7 @@
 ﻿using System;
 using System.IO;
 
-namespace TimerAndStopwatch
+namespace Timer
 {
     /// <summary>
     /// SoundPlayerで再生される音声の音量を変更する
