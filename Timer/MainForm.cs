@@ -262,6 +262,24 @@ namespace TimerAndStopwatch
             }
         }
 
+        private void MaximizeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (!maximizeToolStripMenuItem.Checked)
+            {
+                maximizeToolStripMenuItem.Checked = true;
+                MaximizeBox = true;
+                //自分自身のフォームを最大化
+                WindowState = FormWindowState.Maximized;
+            }
+            else
+            {
+                maximizeToolStripMenuItem.Checked = false;
+                MaximizeBox = false;
+                //自分自身のフォームをウィンドウサイズ
+                WindowState = FormWindowState.Normal;
+            }
+        }
+
         private void CloseToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Close();
