@@ -5,7 +5,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Media;
 
-namespace TimerAndStopwatch
+namespace Timer
 {
     public partial class MainForm : Form
     {
