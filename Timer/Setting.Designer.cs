@@ -1,5 +1,5 @@
 ﻿
-namespace TimerAndStopwatch
+namespace Timer
 {
     partial class Setting
     {
