@@ -301,12 +301,27 @@ namespace CustomTimer
         {
             cursorTimer.Stop();
 
-            if (!isHiddenCursor && !contextMenuStrip1.Visible)
+            if (!isHiddenCursor && ActiveForm == this)
             {
                 // カーソルが隠れていない時のみ、カーソルを隠す
                 Cursor.Hide();
                 isHiddenCursor = true;
             }
+        }
+
+        private void Msec10ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (msec10ToolStripMenuItem.Checked)
+            {
+                msec10ToolStripMenuItem.Checked = false;
+                mainTimer.Interval = 100;
+            }
+            else
+            {
+                msec10ToolStripMenuItem.Checked = true;
+                mainTimer.Interval = 10;
+            }
+            LabelTime_TextChange();
         }
         #endregion
 
@@ -336,6 +351,27 @@ namespace CustomTimer
         /// <param name="e"></param>
         private void MainTimer_Tick(object sender, EventArgs e)
         {
+            LabelTime_TextChange();
+
+            if (ts1 <= sw.Elapsed && timeCnt == 0)
+            {
+                Backcolor_Playsound(time1ToolStripMenuItem.Checked, bc1, waveFile1);
+            }
+            else if (ts2 <= sw.Elapsed && timeCnt == 1)
+            {
+                Backcolor_Playsound(time2ToolStripMenuItem.Checked, bc2, waveFile2);
+            }
+            else if (ts3 <= sw.Elapsed && timeCnt == 2)
+            {
+                Backcolor_Playsound(time3ToolStripMenuItem.Checked, bc3, waveFile3);
+            }
+        }
+
+        /// <summary>
+        /// 表示時間の書き換え，リサイズ
+        /// </summary>
+        private void LabelTime_TextChange()
+        {
             // カウントダウン表示の場合
             if (isCountdown)
             {
@@ -363,18 +399,6 @@ namespace CustomTimer
             }
 
             ControlSizeChange(labelTime);
-            if (ts1 <= sw.Elapsed && timeCnt == 0)
-            {
-                Backcolor_Playsound(time1ToolStripMenuItem.Checked, bc1, waveFile1);
-            }
-            else if (ts2 <= sw.Elapsed && timeCnt == 1)
-            {
-                Backcolor_Playsound(time2ToolStripMenuItem.Checked, bc2, waveFile2);
-            }
-            else if (ts3 <= sw.Elapsed && timeCnt == 2)
-            {
-                Backcolor_Playsound(time3ToolStripMenuItem.Checked, bc3, waveFile3);
-            }
         }
 
         /// <summary>
@@ -462,7 +486,6 @@ namespace CustomTimer
             startStopToolStripMenuItem.Text = "開始（ダブルクリック）";
             ControlSizeChange(labelTime);
             BackColor = initColor;
-            //advSettingToolStripMenuItem.Enabled = true;
             isStandBy = true;
             timeCnt = 0;
         }
@@ -472,7 +495,22 @@ namespace CustomTimer
         /// </summary>
         /// <param name="ts"></param>
         /// <returns></returns>
+#if false
         private string TimeSpanToString(TimeSpan ts) => ts.ToString(@"h\:mm\:ss");
+#elif false
+        private string TimeSpanToString(TimeSpan ts) => ts.ToString((ts.Hours != 0 ? @"h\:" : "") + @"mm\:ss");
+#else
+        private string TimeSpanToString(TimeSpan ts)
+        {
+            string str = ts.Hours == 0 ? @"mm\:ss" : @"h\:mm\:ss";
+            if (msec10ToolStripMenuItem.Checked) { str += @"\.ff"; }
+            //string str = ts.Hours == 0
+            //    ? (millisecondToolStripMenuItem.Checked ? @"mm\:ss\.ff" : @"mm\:ss")
+            //    : (millisecondToolStripMenuItem.Checked ? @"h\:mm\:ss\.ff" : @"h\:mm\:ss");
+
+            return ts.ToString(str);
+        }
+#endif
         /// <summary>
         /// True -> CountUp, False -> CountDown をStringで出力
         /// </summary>
@@ -480,7 +518,7 @@ namespace CustomTimer
         /// <returns></returns>
         private string String_ChangeToCountUpOrCountDown(bool isCountdown) => "カウント" + (isCountdown ? "アップ" : "ダウン") + "に変更";
 
-        #region フォームの移動，クリックタイマー開始，停止
+#region フォームの移動，クリックタイマー開始，停止
         /// <summary>
         /// マウスのクリック位置を記憶
         /// </summary>
@@ -676,9 +714,9 @@ namespace CustomTimer
             ShowCursor();
             cursorTimer.Start();
         }
-        #endregion
+#endregion
 
-        #region ベルの再生
+#region ベルの再生
         private SoundPlayer player = null;
 
         //WAVEファイルを再生する
@@ -714,7 +752,7 @@ namespace CustomTimer
                 player = null;
             }
         }
-        #endregion
+#endregion
 
     }
 }
