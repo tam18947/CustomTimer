@@ -268,7 +268,6 @@ namespace CustomTimer
             if (colorDialog1.ShowDialog() == DialogResult.OK)
             {
                 initColor = colorDialog1.Color;
-                //if (advSettingToolStripMenuItem.Enabled)
                 if (isStandBy)
                 { BackColor = colorDialog1.Color; }
             }
@@ -455,7 +454,6 @@ namespace CustomTimer
         /// </summary>
         private void StartStop()
         {
-            //advSettingToolStripMenuItem.Enabled = false;
             isStandBy = false;
             if (mainTimer.Enabled)
             {
@@ -504,9 +502,6 @@ namespace CustomTimer
         {
             string str = ts.Hours == 0 ? @"mm\:ss" : @"h\:mm\:ss";
             if (msec10ToolStripMenuItem.Checked) { str += @"\.ff"; }
-            //string str = ts.Hours == 0
-            //    ? (millisecondToolStripMenuItem.Checked ? @"mm\:ss\.ff" : @"mm\:ss")
-            //    : (millisecondToolStripMenuItem.Checked ? @"h\:mm\:ss\.ff" : @"h\:mm\:ss");
 
             return ts.ToString(str);
         }
