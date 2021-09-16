@@ -68,7 +68,6 @@ namespace CustomTimer
         private string waveFile1, waveFile2, waveFile3;
         private bool isStandBy;
 
-        //private readonly Timer cursorTimer; // カーソルを隠すためのタイマー
         private const int HIDE_CURSOR_TIME = 2000; // カーソルを隠すミリ秒数
         private bool isHiddenCursor; // カーソルが隠れているか
         private Point previousPoint; // 前回のカーソル位置
