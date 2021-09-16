@@ -67,7 +67,7 @@ namespace CustomTimer
             // 
             this.buttonOK.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonOK.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.buttonOK.Location = new System.Drawing.Point(124, 429);
+            this.buttonOK.Location = new System.Drawing.Point(120, 429);
             this.buttonOK.Name = "buttonOK";
             this.buttonOK.Size = new System.Drawing.Size(88, 29);
             this.buttonOK.TabIndex = 3;
@@ -183,14 +183,14 @@ namespace CustomTimer
             // 
             this.numericUpDownVolume.Location = new System.Drawing.Point(6, 341);
             this.numericUpDownVolume.Name = "numericUpDownVolume";
-            this.numericUpDownVolume.Size = new System.Drawing.Size(56, 23);
+            this.numericUpDownVolume.Size = new System.Drawing.Size(50, 23);
             this.numericUpDownVolume.TabIndex = 1;
             this.numericUpDownVolume.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.numericUpDownVolume.ValueChanged += new System.EventHandler(this.NumericUpDownVolume_ValueChanged);
             // 
             // trackBarVolume
             // 
-            this.trackBarVolume.Location = new System.Drawing.Point(6, 22);
+            this.trackBarVolume.Location = new System.Drawing.Point(17, 22);
             this.trackBarVolume.Maximum = 100;
             this.trackBarVolume.Name = "trackBarVolume";
             this.trackBarVolume.Orientation = System.Windows.Forms.Orientation.Vertical;
@@ -296,7 +296,7 @@ namespace CustomTimer
             this.groupBoxVolume.Controls.Add(this.numericUpDownVolume);
             this.groupBoxVolume.Location = new System.Drawing.Point(140, 12);
             this.groupBoxVolume.Name = "groupBoxVolume";
-            this.groupBoxVolume.Size = new System.Drawing.Size(72, 411);
+            this.groupBoxVolume.Size = new System.Drawing.Size(68, 411);
             this.groupBoxVolume.TabIndex = 2;
             this.groupBoxVolume.TabStop = false;
             this.groupBoxVolume.Text = "音量";
@@ -306,8 +306,9 @@ namespace CustomTimer
             this.AcceptButton = this.buttonOK;
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoSize = true;
             this.CancelButton = this.buttonOK;
-            this.ClientSize = new System.Drawing.Size(224, 470);
+            this.ClientSize = new System.Drawing.Size(220, 470);
             this.Controls.Add(this.groupBoxVolume);
             this.Controls.Add(this.groupBoxTimer);
             this.Controls.Add(this.groupBoxTime);
