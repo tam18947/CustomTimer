@@ -296,18 +296,6 @@ namespace CustomTimer
             Close();
         }
 
-        private void CursorTimer_Tick(object sender, EventArgs e)
-        {
-            cursorTimer.Stop();
-
-            if (!isHiddenCursor && ActiveForm == this)
-            {
-                // カーソルが隠れていない時のみ、カーソルを隠す
-                Cursor.Hide();
-                isHiddenCursor = true;
-            }
-        }
-
         private void Msec10ToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (msec10ToolStripMenuItem.Checked)
@@ -329,14 +317,14 @@ namespace CustomTimer
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void TimerClick_Tick(object sender, EventArgs e)
+        private void ClickIntervalTimer_Tick(object sender, EventArgs e)
         {
             // 時間計測
-            clickInterval += timerClick.Interval;
+            clickInterval += clickIntervalTimer.Interval;
             // ダブルクリック間隔の時間を超えたらリセット
             if (SystemInformation.DoubleClickTime < clickInterval)
             {
-                timerClick.Stop();
+                clickIntervalTimer.Stop();
                 clickInterval = 0;
                 isFirstClick = true;
                 clickCnt = 0;
@@ -344,7 +332,7 @@ namespace CustomTimer
         }
 
         /// <summary>
-        /// タイマー計測時の実処理
+        /// タイマー計測時の時間表示の更新
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -363,6 +351,23 @@ namespace CustomTimer
             else if (ts3 <= sw.Elapsed && timeCnt == 2)
             {
                 Backcolor_Playsound(time3ToolStripMenuItem.Checked, bc3, waveFile3);
+            }
+        }
+
+        /// <summary>
+        /// マウスカーソルを隠すときのタイマー
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void CursorTimer_Tick(object sender, EventArgs e)
+        {
+            cursorTimer.Stop();
+
+            if (!isHiddenCursor && ActiveForm == this)
+            {
+                // カーソルが隠れていない時のみ、カーソルを隠す
+                Cursor.Hide();
+                isHiddenCursor = true;
             }
         }
 
@@ -513,11 +518,22 @@ namespace CustomTimer
         /// <returns></returns>
         private string String_ChangeToCountUpOrCountDown(bool isCountdown) => "カウント" + (isCountdown ? "アップ" : "ダウン") + "に変更";
 
-#region フォームの移動，クリックタイマー開始，停止
+#region マウス操作
         /// <summary>
         /// マウスのクリック位置を記憶
         /// </summary>
         private Point mousePoint;
+
+        /// <summary>
+        /// MouseDownイベントハンドラ
+        /// マウスがフォームから離れたとき
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void MainForm_MouseLeave(object sender, EventArgs e)
+        {
+            cursorTimer.Stop();
+        }
 
         /// <summary>
         /// MouseDownイベントハンドラ
@@ -547,7 +563,7 @@ namespace CustomTimer
                 if (isFirstClick)
                 {
                     isFirstClick = false;
-                    timerClick.Start();
+                    clickIntervalTimer.Start();
                 }
 
                 // ダブルクリック間隔の時間を超えるまで処理
