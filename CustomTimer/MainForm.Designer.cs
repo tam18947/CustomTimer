@@ -66,11 +66,11 @@
             this.labelTime.AutoSize = true;
             this.labelTime.BackColor = System.Drawing.Color.Transparent;
             this.labelTime.ContextMenuStrip = this.contextMenuStrip1;
-            this.labelTime.Font = new System.Drawing.Font("MS UI Gothic", 18F);
+            this.labelTime.Font = new System.Drawing.Font("Yu Gothic UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.labelTime.ForeColor = System.Drawing.Color.White;
-            this.labelTime.Location = new System.Drawing.Point(20, 9);
+            this.labelTime.Location = new System.Drawing.Point(12, 9);
             this.labelTime.Name = "labelTime";
-            this.labelTime.Size = new System.Drawing.Size(80, 24);
+            this.labelTime.Size = new System.Drawing.Size(43, 15);
             this.labelTime.TabIndex = 0;
             this.labelTime.Text = "0:00:00";
             this.labelTime.MouseDown += new System.Windows.Forms.MouseEventHandler(this.MainForm_MouseDown);
@@ -268,17 +268,18 @@
             // 
             // MainForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Black;
-            this.ClientSize = new System.Drawing.Size(120, 43);
+            this.ClientSize = new System.Drawing.Size(140, 54);
             this.ContextMenuStrip = this.contextMenuStrip1;
             this.ControlBox = false;
             this.Controls.Add(this.labelTime);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
-            this.MinimumSize = new System.Drawing.Size(136, 59);
+            this.MinimumSize = new System.Drawing.Size(156, 70);
             this.Name = "MainForm";
             this.TopMost = true;
             this.Load += new System.EventHandler(this.MainForm_Load);

@@ -67,9 +67,9 @@ namespace CustomTimer
             // 
             this.buttonOK.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonOK.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.buttonOK.Location = new System.Drawing.Point(120, 370);
+            this.buttonOK.Location = new System.Drawing.Point(124, 429);
             this.buttonOK.Name = "buttonOK";
-            this.buttonOK.Size = new System.Drawing.Size(75, 23);
+            this.buttonOK.Size = new System.Drawing.Size(88, 29);
             this.buttonOK.TabIndex = 3;
             this.buttonOK.Text = "OK";
             this.buttonOK.UseVisualStyleBackColor = true;
@@ -77,39 +77,39 @@ namespace CustomTimer
             // dateTimePicker1
             // 
             this.dateTimePicker1.Format = System.Windows.Forms.DateTimePickerFormat.Time;
-            this.dateTimePicker1.Location = new System.Drawing.Point(31, 40);
+            this.dateTimePicker1.Location = new System.Drawing.Point(36, 48);
             this.dateTimePicker1.Name = "dateTimePicker1";
             this.dateTimePicker1.ShowUpDown = true;
-            this.dateTimePicker1.Size = new System.Drawing.Size(80, 19);
+            this.dateTimePicker1.Size = new System.Drawing.Size(80, 23);
             this.dateTimePicker1.TabIndex = 1;
             this.dateTimePicker1.Value = new System.DateTime(2000, 1, 1, 0, 0, 0, 0);
             // 
             // dateTimePicker2
             // 
             this.dateTimePicker2.Format = System.Windows.Forms.DateTimePickerFormat.Time;
-            this.dateTimePicker2.Location = new System.Drawing.Point(31, 112);
+            this.dateTimePicker2.Location = new System.Drawing.Point(36, 131);
             this.dateTimePicker2.Name = "dateTimePicker2";
             this.dateTimePicker2.ShowUpDown = true;
-            this.dateTimePicker2.Size = new System.Drawing.Size(80, 19);
+            this.dateTimePicker2.Size = new System.Drawing.Size(80, 23);
             this.dateTimePicker2.TabIndex = 4;
             this.dateTimePicker2.Value = new System.DateTime(2000, 1, 1, 0, 0, 0, 0);
             // 
             // dateTimePicker3
             // 
             this.dateTimePicker3.Format = System.Windows.Forms.DateTimePickerFormat.Time;
-            this.dateTimePicker3.Location = new System.Drawing.Point(31, 184);
+            this.dateTimePicker3.Location = new System.Drawing.Point(36, 214);
             this.dateTimePicker3.Name = "dateTimePicker3";
             this.dateTimePicker3.ShowUpDown = true;
-            this.dateTimePicker3.Size = new System.Drawing.Size(80, 19);
+            this.dateTimePicker3.Size = new System.Drawing.Size(80, 23);
             this.dateTimePicker3.TabIndex = 7;
             this.dateTimePicker3.Value = new System.DateTime(2000, 1, 1, 0, 0, 0, 0);
             // 
             // pictureBox1
             // 
             this.pictureBox1.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.pictureBox1.Location = new System.Drawing.Point(6, 40);
+            this.pictureBox1.Location = new System.Drawing.Point(7, 48);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(19, 19);
+            this.pictureBox1.Size = new System.Drawing.Size(23, 23);
             this.pictureBox1.TabIndex = 5;
             this.pictureBox1.TabStop = false;
             this.pictureBox1.Click += new System.EventHandler(this.PictureBox1_Click);
@@ -118,9 +118,9 @@ namespace CustomTimer
             // 
             // pictureBox2
             // 
-            this.pictureBox2.Location = new System.Drawing.Point(6, 112);
+            this.pictureBox2.Location = new System.Drawing.Point(7, 131);
             this.pictureBox2.Name = "pictureBox2";
-            this.pictureBox2.Size = new System.Drawing.Size(19, 19);
+            this.pictureBox2.Size = new System.Drawing.Size(23, 23);
             this.pictureBox2.TabIndex = 6;
             this.pictureBox2.TabStop = false;
             this.pictureBox2.Click += new System.EventHandler(this.PictureBox2_Click);
@@ -129,9 +129,9 @@ namespace CustomTimer
             // 
             // pictureBox3
             // 
-            this.pictureBox3.Location = new System.Drawing.Point(6, 184);
+            this.pictureBox3.Location = new System.Drawing.Point(7, 214);
             this.pictureBox3.Name = "pictureBox3";
-            this.pictureBox3.Size = new System.Drawing.Size(19, 19);
+            this.pictureBox3.Size = new System.Drawing.Size(23, 23);
             this.pictureBox3.TabIndex = 7;
             this.pictureBox3.TabStop = false;
             this.pictureBox3.Click += new System.EventHandler(this.PictureBox3_Click);
@@ -141,9 +141,9 @@ namespace CustomTimer
             // checkBox1
             // 
             this.checkBox1.AutoSize = true;
-            this.checkBox1.Location = new System.Drawing.Point(6, 18);
+            this.checkBox1.Location = new System.Drawing.Point(6, 22);
             this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(40, 16);
+            this.checkBox1.Size = new System.Drawing.Size(41, 19);
             this.checkBox1.TabIndex = 0;
             this.checkBox1.Text = "1st";
             this.checkBox1.UseVisualStyleBackColor = true;
@@ -151,9 +151,9 @@ namespace CustomTimer
             // checkBox2
             // 
             this.checkBox2.AutoSize = true;
-            this.checkBox2.Location = new System.Drawing.Point(6, 90);
+            this.checkBox2.Location = new System.Drawing.Point(6, 105);
             this.checkBox2.Name = "checkBox2";
-            this.checkBox2.Size = new System.Drawing.Size(42, 16);
+            this.checkBox2.Size = new System.Drawing.Size(46, 19);
             this.checkBox2.TabIndex = 3;
             this.checkBox2.Text = "2nd";
             this.checkBox2.UseVisualStyleBackColor = true;
@@ -161,9 +161,9 @@ namespace CustomTimer
             // checkBox3
             // 
             this.checkBox3.AutoSize = true;
-            this.checkBox3.Location = new System.Drawing.Point(6, 162);
+            this.checkBox3.Location = new System.Drawing.Point(6, 188);
             this.checkBox3.Name = "checkBox3";
-            this.checkBox3.Size = new System.Drawing.Size(40, 16);
+            this.checkBox3.Size = new System.Drawing.Size(43, 19);
             this.checkBox3.TabIndex = 6;
             this.checkBox3.Text = "3rd";
             this.checkBox3.UseVisualStyleBackColor = true;
@@ -171,9 +171,9 @@ namespace CustomTimer
             // checkBoxMute
             // 
             this.checkBoxMute.AutoSize = true;
-            this.checkBoxMute.Location = new System.Drawing.Point(6, 318);
+            this.checkBoxMute.Location = new System.Drawing.Point(6, 370);
             this.checkBoxMute.Name = "checkBoxMute";
-            this.checkBoxMute.Size = new System.Drawing.Size(48, 16);
+            this.checkBoxMute.Size = new System.Drawing.Size(50, 19);
             this.checkBoxMute.TabIndex = 2;
             this.checkBoxMute.Text = "消音";
             this.checkBoxMute.UseVisualStyleBackColor = true;
@@ -181,20 +181,20 @@ namespace CustomTimer
             // 
             // numericUpDownVolume
             // 
-            this.numericUpDownVolume.Location = new System.Drawing.Point(6, 293);
+            this.numericUpDownVolume.Location = new System.Drawing.Point(6, 341);
             this.numericUpDownVolume.Name = "numericUpDownVolume";
-            this.numericUpDownVolume.Size = new System.Drawing.Size(48, 19);
+            this.numericUpDownVolume.Size = new System.Drawing.Size(56, 23);
             this.numericUpDownVolume.TabIndex = 1;
             this.numericUpDownVolume.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.numericUpDownVolume.ValueChanged += new System.EventHandler(this.NumericUpDownVolume_ValueChanged);
             // 
             // trackBarVolume
             // 
-            this.trackBarVolume.Location = new System.Drawing.Point(9, 18);
+            this.trackBarVolume.Location = new System.Drawing.Point(6, 22);
             this.trackBarVolume.Maximum = 100;
             this.trackBarVolume.Name = "trackBarVolume";
             this.trackBarVolume.Orientation = System.Windows.Forms.Orientation.Vertical;
-            this.trackBarVolume.Size = new System.Drawing.Size(45, 269);
+            this.trackBarVolume.Size = new System.Drawing.Size(45, 313);
             this.trackBarVolume.TabIndex = 0;
             this.trackBarVolume.Scroll += new System.EventHandler(this.TrackBarVolume_Scroll);
             // 
@@ -202,32 +202,32 @@ namespace CustomTimer
             // 
             this.dateTimePickerCountdown.Enabled = false;
             this.dateTimePickerCountdown.Format = System.Windows.Forms.DateTimePickerFormat.Time;
-            this.dateTimePickerCountdown.Location = new System.Drawing.Point(31, 62);
+            this.dateTimePickerCountdown.Location = new System.Drawing.Point(36, 72);
             this.dateTimePickerCountdown.Name = "dateTimePickerCountdown";
             this.dateTimePickerCountdown.ShowUpDown = true;
-            this.dateTimePickerCountdown.Size = new System.Drawing.Size(80, 19);
+            this.dateTimePickerCountdown.Size = new System.Drawing.Size(80, 23);
             this.dateTimePickerCountdown.TabIndex = 2;
             this.dateTimePickerCountdown.Value = new System.DateTime(2000, 1, 1, 0, 0, 0, 0);
             // 
             // textBox1
             // 
-            this.textBox1.Location = new System.Drawing.Point(6, 65);
+            this.textBox1.Location = new System.Drawing.Point(7, 77);
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(105, 19);
+            this.textBox1.Size = new System.Drawing.Size(109, 23);
             this.textBox1.TabIndex = 2;
             // 
             // textBox2
             // 
-            this.textBox2.Location = new System.Drawing.Point(6, 137);
+            this.textBox2.Location = new System.Drawing.Point(7, 160);
             this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(105, 19);
+            this.textBox2.Size = new System.Drawing.Size(109, 23);
             this.textBox2.TabIndex = 5;
             // 
             // textBox3
             // 
-            this.textBox3.Location = new System.Drawing.Point(6, 209);
+            this.textBox3.Location = new System.Drawing.Point(7, 243);
             this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(105, 19);
+            this.textBox3.Size = new System.Drawing.Size(109, 23);
             this.textBox3.TabIndex = 8;
             // 
             // groupBoxTime
@@ -245,9 +245,9 @@ namespace CustomTimer
             this.groupBoxTime.Controls.Add(this.pictureBox3);
             this.groupBoxTime.Controls.Add(this.checkBox2);
             this.groupBoxTime.Controls.Add(this.checkBox3);
-            this.groupBoxTime.Location = new System.Drawing.Point(12, 118);
+            this.groupBoxTime.Location = new System.Drawing.Point(12, 135);
             this.groupBoxTime.Name = "groupBoxTime";
-            this.groupBoxTime.Size = new System.Drawing.Size(117, 246);
+            this.groupBoxTime.Size = new System.Drawing.Size(122, 288);
             this.groupBoxTime.TabIndex = 1;
             this.groupBoxTime.TabStop = false;
             this.groupBoxTime.Text = "背景色/時間";
@@ -260,7 +260,7 @@ namespace CustomTimer
             this.groupBoxTimer.Controls.Add(this.dateTimePickerCountdown);
             this.groupBoxTimer.Location = new System.Drawing.Point(12, 12);
             this.groupBoxTimer.Name = "groupBoxTimer";
-            this.groupBoxTimer.Size = new System.Drawing.Size(117, 100);
+            this.groupBoxTimer.Size = new System.Drawing.Size(122, 117);
             this.groupBoxTimer.TabIndex = 0;
             this.groupBoxTimer.TabStop = false;
             this.groupBoxTimer.Text = "機能";
@@ -268,9 +268,9 @@ namespace CustomTimer
             // radioButtonCountdown
             // 
             this.radioButtonCountdown.AutoSize = true;
-            this.radioButtonCountdown.Location = new System.Drawing.Point(6, 40);
+            this.radioButtonCountdown.Location = new System.Drawing.Point(6, 47);
             this.radioButtonCountdown.Name = "radioButtonCountdown";
-            this.radioButtonCountdown.Size = new System.Drawing.Size(85, 16);
+            this.radioButtonCountdown.Size = new System.Drawing.Size(87, 19);
             this.radioButtonCountdown.TabIndex = 1;
             this.radioButtonCountdown.Text = "カウントダウン";
             this.radioButtonCountdown.UseVisualStyleBackColor = true;
@@ -280,9 +280,9 @@ namespace CustomTimer
             // 
             this.radioButtonCountup.AutoSize = true;
             this.radioButtonCountup.Checked = true;
-            this.radioButtonCountup.Location = new System.Drawing.Point(6, 18);
+            this.radioButtonCountup.Location = new System.Drawing.Point(6, 22);
             this.radioButtonCountup.Name = "radioButtonCountup";
-            this.radioButtonCountup.Size = new System.Drawing.Size(83, 16);
+            this.radioButtonCountup.Size = new System.Drawing.Size(86, 19);
             this.radioButtonCountup.TabIndex = 0;
             this.radioButtonCountup.TabStop = true;
             this.radioButtonCountup.Text = "カウントアップ";
@@ -294,9 +294,9 @@ namespace CustomTimer
             this.groupBoxVolume.Controls.Add(this.checkBoxMute);
             this.groupBoxVolume.Controls.Add(this.trackBarVolume);
             this.groupBoxVolume.Controls.Add(this.numericUpDownVolume);
-            this.groupBoxVolume.Location = new System.Drawing.Point(135, 12);
+            this.groupBoxVolume.Location = new System.Drawing.Point(140, 12);
             this.groupBoxVolume.Name = "groupBoxVolume";
-            this.groupBoxVolume.Size = new System.Drawing.Size(60, 352);
+            this.groupBoxVolume.Size = new System.Drawing.Size(72, 411);
             this.groupBoxVolume.TabIndex = 2;
             this.groupBoxVolume.TabStop = false;
             this.groupBoxVolume.Text = "音量";
@@ -304,16 +304,19 @@ namespace CustomTimer
             // Setting
             // 
             this.AcceptButton = this.buttonOK;
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.buttonOK;
-            this.ClientSize = new System.Drawing.Size(207, 405);
+            this.ClientSize = new System.Drawing.Size(224, 470);
             this.Controls.Add(this.groupBoxVolume);
             this.Controls.Add(this.groupBoxTimer);
             this.Controls.Add(this.groupBoxTime);
             this.Controls.Add(this.buttonOK);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.Margin = new System.Windows.Forms.Padding(4);
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "Setting";
             this.Text = "設定";
             this.TopMost = true;
