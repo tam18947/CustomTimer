@@ -151,7 +151,11 @@ namespace CustomTimer
             if (!mainTimer.Enabled)
             { TimerReset(); }
         }
-
+        /// <summary>
+        /// 詳細設定メニュークリック時の処理
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void AdvSettingToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Setting setting = new Setting
@@ -312,6 +316,7 @@ namespace CustomTimer
         }
         #endregion
 
+        #region タイマーイベント処理
         /// <summary>
         /// クリック間隔の時間の計測
         /// </summary>
@@ -370,6 +375,7 @@ namespace CustomTimer
                 isHiddenCursor = true;
             }
         }
+        #endregion
 
         /// <summary>
         /// 表示時間の書き換え，リサイズ
@@ -493,16 +499,29 @@ namespace CustomTimer
             timeCnt = 0;
         }
 
+#if false
         /// <summary>
-        /// TimeSpanのString型への変換形式の指定
+        /// TimeSpanのString型への変換形式の指定。
         /// </summary>
         /// <param name="ts"></param>
         /// <returns></returns>
-#if false
         private string TimeSpanToString(TimeSpan ts) => ts.ToString(@"h\:mm\:ss");
 #elif false
+        /// <summary>
+        /// TimeSpanのString型への変換形式の指定。
+        /// 1時間未満なら分単位から表示する。
+        /// </summary>
+        /// <param name="ts"></param>
+        /// <returns></returns>
         private string TimeSpanToString(TimeSpan ts) => ts.ToString((ts.Hours != 0 ? @"h\:" : "") + @"mm\:ss");
 #else
+        /// <summary>
+        /// TimeSpanのString型への変換形式の指定。
+        /// 1時間未満なら分単位から表示する。
+        /// 必要に応じて1/100秒単位を表示する。
+        /// </summary>
+        /// <param name="ts"></param>
+        /// <returns></returns>
         private string TimeSpanToString(TimeSpan ts)
         {
             string str = ts.Hours == 0 ? @"mm\:ss" : @"h\:mm\:ss";
@@ -516,7 +535,7 @@ namespace CustomTimer
         /// </summary>
         /// <param name="isCountdown"></param>
         /// <returns></returns>
-        private string String_ChangeToCountUpOrCountDown(bool isCountdown) => "カウント" + (isCountdown ? "アップ" : "ダウン") + "に変更";
+        private static string String_ChangeToCountUpOrCountDown(bool isCountdown) => "カウント" + (isCountdown ? "アップ" : "ダウン") + "に変更";
 
 #region マウス操作
         /// <summary>
