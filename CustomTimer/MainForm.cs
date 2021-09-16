@@ -45,9 +45,8 @@ namespace CustomTimer
             isHiddenCursor = false;
             previousPoint = Cursor.Position;
 
-            // カーソルを隠すためのタイマー生成
+            // カーソルを隠すためのタイマーのインターバル
             cursorTimer.Interval = HIDE_CURSOR_TIME;
-            cursorTimer.Start();
         }
 
         /// <summary>
