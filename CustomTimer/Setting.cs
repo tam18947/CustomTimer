@@ -172,5 +172,51 @@ namespace CustomTimer
         /// カウントダウン表示するかどうかを設定または取得します。
         /// </summary>
         public bool IsCountdown { get => radioButtonCountdown.Checked; set => radioButtonCountdown.Checked = value; }
+
+        private void CheckBox1_CheckedChanged(object sender, EventArgs e)
+        {
+            if (!checkBox1.Checked)
+            {
+                checkBox2.Checked = false;
+                checkBox3.Checked = false;
+            }
+        }
+
+        private void CheckBox2_CheckedChanged(object sender, EventArgs e)
+        {
+            if (!checkBox2.Checked)
+            {
+                checkBox3.Checked = false;
+            }
+            else
+            {
+                checkBox1.Checked = true;
+            }
+        }
+
+        private void CheckBox3_CheckedChanged(object sender, EventArgs e)
+        {
+            if (checkBox3.Checked)
+            {
+                checkBox1.Checked = true;
+                checkBox2.Checked = true;
+            }
+        }
+
+        private void DateTimePicker1_ValueChanged(object sender, EventArgs e)
+        {
+            if (dateTimePicker1.Value > dateTimePicker2.Value)
+            {
+                dateTimePicker2.Value = dateTimePicker1.Value;
+            }
+        }
+
+        private void DateTimePicker2_ValueChanged(object sender, EventArgs e)
+        {
+            if (dateTimePicker2.Value > dateTimePicker3.Value)
+            {
+                dateTimePicker3.Value = dateTimePicker2.Value;
+            }
+        }
     }
 }
