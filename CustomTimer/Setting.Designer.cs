@@ -83,6 +83,7 @@ namespace CustomTimer
             this.dateTimePicker1.Size = new System.Drawing.Size(80, 23);
             this.dateTimePicker1.TabIndex = 1;
             this.dateTimePicker1.Value = new System.DateTime(2000, 1, 1, 0, 0, 0, 0);
+            this.dateTimePicker1.ValueChanged += new System.EventHandler(this.DateTimePicker1_ValueChanged);
             // 
             // dateTimePicker2
             // 
@@ -93,6 +94,7 @@ namespace CustomTimer
             this.dateTimePicker2.Size = new System.Drawing.Size(80, 23);
             this.dateTimePicker2.TabIndex = 4;
             this.dateTimePicker2.Value = new System.DateTime(2000, 1, 1, 0, 0, 0, 0);
+            this.dateTimePicker2.ValueChanged += new System.EventHandler(this.DateTimePicker2_ValueChanged);
             // 
             // dateTimePicker3
             // 
@@ -147,6 +149,7 @@ namespace CustomTimer
             this.checkBox1.TabIndex = 0;
             this.checkBox1.Text = "1st";
             this.checkBox1.UseVisualStyleBackColor = true;
+            this.checkBox1.CheckedChanged += new System.EventHandler(this.CheckBox1_CheckedChanged);
             // 
             // checkBox2
             // 
@@ -157,6 +160,7 @@ namespace CustomTimer
             this.checkBox2.TabIndex = 3;
             this.checkBox2.Text = "2nd";
             this.checkBox2.UseVisualStyleBackColor = true;
+            this.checkBox2.CheckedChanged += new System.EventHandler(this.CheckBox2_CheckedChanged);
             // 
             // checkBox3
             // 
@@ -167,6 +171,7 @@ namespace CustomTimer
             this.checkBox3.TabIndex = 6;
             this.checkBox3.Text = "3rd";
             this.checkBox3.UseVisualStyleBackColor = true;
+            this.checkBox3.CheckedChanged += new System.EventHandler(this.CheckBox3_CheckedChanged);
             // 
             // checkBoxMute
             // 
@@ -233,14 +238,14 @@ namespace CustomTimer
             // groupBoxTime
             // 
             this.groupBoxTime.AutoSize = true;
+            this.groupBoxTime.Controls.Add(this.pictureBox1);
+            this.groupBoxTime.Controls.Add(this.textBox1);
+            this.groupBoxTime.Controls.Add(this.dateTimePicker1);
             this.groupBoxTime.Controls.Add(this.checkBox1);
             this.groupBoxTime.Controls.Add(this.textBox3);
-            this.groupBoxTime.Controls.Add(this.dateTimePicker1);
             this.groupBoxTime.Controls.Add(this.textBox2);
             this.groupBoxTime.Controls.Add(this.dateTimePicker2);
-            this.groupBoxTime.Controls.Add(this.textBox1);
             this.groupBoxTime.Controls.Add(this.dateTimePicker3);
-            this.groupBoxTime.Controls.Add(this.pictureBox1);
             this.groupBoxTime.Controls.Add(this.pictureBox2);
             this.groupBoxTime.Controls.Add(this.pictureBox3);
             this.groupBoxTime.Controls.Add(this.checkBox2);
