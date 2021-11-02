@@ -218,16 +218,34 @@ namespace CustomTimer
         private void Time1ToolStripMenuItem_Click(object sender, EventArgs e)
         {
             time1ToolStripMenuItem.Checked = !time1ToolStripMenuItem.Checked;
+            if (!time1ToolStripMenuItem.Checked)
+            {
+                time2ToolStripMenuItem.Checked = false;
+                time3ToolStripMenuItem.Checked = false;
+            }
         }
 
         private void Time2ToolStripMenuItem_Click(object sender, EventArgs e)
         {
             time2ToolStripMenuItem.Checked = !time2ToolStripMenuItem.Checked;
+            if (!time2ToolStripMenuItem.Checked)
+            {
+                time3ToolStripMenuItem.Checked = false;
+            }
+            else
+            {
+                time1ToolStripMenuItem.Checked = true;
+            }
         }
 
         private void Time3ToolStripMenuItem_Click(object sender, EventArgs e)
         {
             time3ToolStripMenuItem.Checked = !time3ToolStripMenuItem.Checked;
+            if (time3ToolStripMenuItem.Checked)
+            {
+                time1ToolStripMenuItem.Checked = true;
+                time2ToolStripMenuItem.Checked = true;
+            }
         }
 
         private void VolumeToolStripMenuItem_Click(object sender, EventArgs e)
