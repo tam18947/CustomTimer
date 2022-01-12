@@ -50,9 +50,20 @@ namespace CustomTimer
         }
 
         /// <summary>
+        /// コンテキストメニューが開くときはカーソルを表示する
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ContextMenuStrip1_Opening(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            Cursor.Show();
+            isHiddenCursor = false;
+        }
+
+        /// <summary>
         /// Stopwatchオブジェクトを作成する
         /// </summary>
-        private readonly Stopwatch sw = new Stopwatch();
+        private readonly Stopwatch sw = new();
 
         private int clickInterval = 0;
         private int clickCnt = 0;
@@ -154,9 +165,9 @@ namespace CustomTimer
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void AdvSettingToolStripMenuItem_Click(object sender, EventArgs e)
+        private void SettingToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Setting setting = new Setting
+            Setting setting = new()
             {
                 Owner = this,
                 // 時間
@@ -254,17 +265,42 @@ namespace CustomTimer
             volumeToolStripMenuItem.Text = volumeToolStripMenuItem.Checked ? "音量 " + volume + "%" : "音量 0%";
         }
 
-        private void VolumeTestToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            if (File.Exists(waveFile1))
-            {
-                PlaySound(waveFile1);
-            }
-        }
-
         private void TopMostToolStripMenuItem_Click(object sender, EventArgs e)
         {
             TopMost = topMostToolStripMenuItem.Checked = !topMostToolStripMenuItem.Checked;
+        }
+
+        private void MaximizeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (!maximizeToolStripMenuItem.Checked)
+            {
+                maximizeToolStripMenuItem.Checked = true;
+                MaximizeBox = true;
+                //自分自身のフォームを最大化
+                WindowState = FormWindowState.Maximized;
+            }
+            else
+            {
+                maximizeToolStripMenuItem.Checked = false;
+                MaximizeBox = false;
+                //自分自身のフォームをウィンドウサイズ
+                WindowState = FormWindowState.Normal;
+            }
+        }
+
+        private void Msec10ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (msec10ToolStripMenuItem.Checked)
+            {
+                msec10ToolStripMenuItem.Checked = false;
+                mainTimer.Interval = 100;
+            }
+            else
+            {
+                msec10ToolStripMenuItem.Checked = true;
+                mainTimer.Interval = 10;
+            }
+            LabelTime_TextChange();
         }
 
         private void FontToolStripMenuItem_Click(object sender, EventArgs e)
@@ -293,42 +329,17 @@ namespace CustomTimer
             }
         }
 
-        private void MaximizeToolStripMenuItem_Click(object sender, EventArgs e)
+        private void VolumeTestToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (!maximizeToolStripMenuItem.Checked)
+            if (File.Exists(waveFile1))
             {
-                maximizeToolStripMenuItem.Checked = true;
-                MaximizeBox = true;
-                //自分自身のフォームを最大化
-                WindowState = FormWindowState.Maximized;
-            }
-            else
-            {
-                maximizeToolStripMenuItem.Checked = false;
-                MaximizeBox = false;
-                //自分自身のフォームをウィンドウサイズ
-                WindowState = FormWindowState.Normal;
+                PlaySound(waveFile1);
             }
         }
 
         private void CloseToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Close();
-        }
-
-        private void Msec10ToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            if (msec10ToolStripMenuItem.Checked)
-            {
-                msec10ToolStripMenuItem.Checked = false;
-                mainTimer.Interval = 100;
-            }
-            else
-            {
-                msec10ToolStripMenuItem.Checked = true;
-                mainTimer.Interval = 10;
-            }
-            LabelTime_TextChange();
         }
         #endregion
 
@@ -439,7 +450,9 @@ namespace CustomTimer
             if (check)
             {
                 BackColor = bc;
-                //labelTime.ForeColor = GetComplementaryColor(bc);
+#if false // 文字色に背景色の補色を使用する場合はTRUE
+                labelTime.ForeColor = GetComplementaryColor(bc);
+#endif 
                 if (volumeToolStripMenuItem.Checked && File.Exists(waveFile))
                 {
                     PlaySound(waveFile);
@@ -451,7 +464,7 @@ namespace CustomTimer
         /// </summary>
         /// <param name="color"></param>
         /// <returns></returns>
-        private Color GetComplementaryColor(Color color)
+        private static Color GetComplementaryColor(Color color)
         {
             //byte r = (byte)~color.R;
             //byte g = (byte)~color.G;
@@ -650,17 +663,17 @@ namespace CustomTimer
                 }
 
                 // 吸着するサイズ
-                Size gap = new Size(16, 16);
+                Size gap = new(16, 16);
 
                 // 移動先のフォーム位置
-                Rectangle newPosition = new Rectangle(
-                    this.Left + x - mousePoint.X,
-                    this.Top + y - mousePoint.Y,
-                    this.Width,
-                    this.Height);
+                Rectangle newPosition = new(
+                    Left + x - mousePoint.X,
+                    Top + y - mousePoint.Y,
+                    Width,
+                    Height);
 
                 // 作業領域の取得（この作業領域の内側に吸着する）
-                Size area = new Size(
+                Size area = new(
                     Screen.FromControl((Control)sender).WorkingArea.Width,
                     Screen.FromControl((Control)sender).WorkingArea.Height);
 
@@ -668,22 +681,22 @@ namespace CustomTimer
                 Point wp = Screen.FromControl((Control)sender).WorkingArea.Location;
 
                 // 画面端の判定用（画面の端の位置に、吸着するサイズ分のRECTを定義する）
-                Rectangle rectLeft = new Rectangle(
+                Rectangle rectLeft = new(
                                             wp.X - 8,
                                             wp.Y,
                                             gap.Width,
                                             area.Height);
-                Rectangle rectTop = new Rectangle(
+                Rectangle rectTop = new(
                                             wp.X,
                                             wp.Y - 8,
                                             area.Width,
                                             gap.Height);
-                Rectangle rectRight = new Rectangle(
+                Rectangle rectRight = new(
                                             area.Width - gap.Width + wp.X + 8,
                                             wp.Y,
                                             gap.Width,
                                             area.Height);
-                Rectangle rectBottom = new Rectangle(
+                Rectangle rectBottom = new(
                                             wp.X,
                                             area.Height - gap.Height + wp.Y + 8,
                                             area.Width,
@@ -716,7 +729,7 @@ namespace CustomTimer
                     if (newRect.IntersectsWith(rectRight))
                     {
                         // 右端に吸着させる
-                        newPosition.X = area.Width - this.Width + wp.X + 8;
+                        newPosition.X = area.Width - Width + wp.X + 8;
                     }
                 }
                 // 上端衝突判定
@@ -741,13 +754,13 @@ namespace CustomTimer
                     if (newRect.IntersectsWith(rectBottom))
                     {
                         // 下端に吸着させる
-                        newPosition.Y = area.Height - this.Height + wp.Y + 8;
+                        newPosition.Y = area.Height - Height + wp.Y + 8;
                     }
                 }
 
                 // 実際に移動させる
-                this.Left = newPosition.Left;
-                this.Top = newPosition.Top;
+                Left = newPosition.Left;
+                Top = newPosition.Top;
             }
 
             if (previousPoint == Cursor.Position)
