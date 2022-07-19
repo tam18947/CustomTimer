@@ -781,24 +781,31 @@ namespace CustomTimer
         //WAVEファイルを再生する
         private void PlaySound(string waveFile)
         {
-            //再生されているときは止める
-            if (player != null)
-                StopSound();
-
-            //読み込む
-            var stream = new WaveStream(File.OpenRead(waveFile))
+            try
             {
-                Volume = volume,
-            };
-            player = new SoundPlayer(stream);
-            //非同期再生する
-            player.Play();
+                //再生されているときは止める
+                if (player != null)
+                    StopSound();
 
-            //次のようにすると、ループ再生される
-            //player.PlayLooping();
+                //読み込む
+                var stream = new WaveStream(File.OpenRead(waveFile))
+                {
+                    Volume = volume,
+                };
+                player = new SoundPlayer(stream);
+                //非同期再生する
+                player.Play();
 
-            //次のようにすると、最後まで再生し終えるまで待機する
-            //player.PlaySync();
+                //次のようにすると、ループ再生される
+                //player.PlayLooping();
+
+                //次のようにすると、最後まで再生し終えるまで待機する
+                //player.PlaySync();
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Unplayable File");
+            }
         }
 
         //再生されている音を止める
