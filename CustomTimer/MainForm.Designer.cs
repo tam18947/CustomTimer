@@ -91,27 +91,27 @@
             this.toolStripSeparator5,
             this.closeToolStripMenuItem});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(202, 264);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(201, 242);
             this.contextMenuStrip1.Opening += new System.ComponentModel.CancelEventHandler(this.ContextMenuStrip1_Opening);
             // 
             // startStopToolStripMenuItem
             // 
             this.startStopToolStripMenuItem.Name = "startStopToolStripMenuItem";
-            this.startStopToolStripMenuItem.Size = new System.Drawing.Size(201, 22);
+            this.startStopToolStripMenuItem.Size = new System.Drawing.Size(200, 22);
             this.startStopToolStripMenuItem.Text = "開始（ダブルクリック）";
             this.startStopToolStripMenuItem.Click += new System.EventHandler(this.StartStopToolStripMenuItem_Click);
             // 
             // resetRestartToolStripMenuItem
             // 
             this.resetRestartToolStripMenuItem.Name = "resetRestartToolStripMenuItem";
-            this.resetRestartToolStripMenuItem.Size = new System.Drawing.Size(201, 22);
+            this.resetRestartToolStripMenuItem.Size = new System.Drawing.Size(200, 22);
             this.resetRestartToolStripMenuItem.Text = "リセット（トリプルクリック）";
             this.resetRestartToolStripMenuItem.Click += new System.EventHandler(this.ResetRestartToolStripMenuItem_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(198, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(197, 6);
             // 
             // settingToolStripMenuItem
             // 
@@ -123,14 +123,14 @@
             this.time2ToolStripMenuItem,
             this.time3ToolStripMenuItem});
             this.settingToolStripMenuItem.Name = "settingToolStripMenuItem";
-            this.settingToolStripMenuItem.Size = new System.Drawing.Size(201, 22);
+            this.settingToolStripMenuItem.Size = new System.Drawing.Size(200, 22);
             this.settingToolStripMenuItem.Text = "設定...";
             this.settingToolStripMenuItem.Click += new System.EventHandler(this.SettingToolStripMenuItem_Click);
             // 
             // countdownToolStripMenuItem
             // 
             this.countdownToolStripMenuItem.Name = "countdownToolStripMenuItem";
-            this.countdownToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.countdownToolStripMenuItem.Size = new System.Drawing.Size(169, 22);
             this.countdownToolStripMenuItem.Text = "カウントダウンに変更";
             this.countdownToolStripMenuItem.Click += new System.EventHandler(this.CountdownToolStripMenuItem_Click);
             // 
@@ -139,21 +139,21 @@
             this.volumeToolStripMenuItem.Checked = true;
             this.volumeToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.volumeToolStripMenuItem.Name = "volumeToolStripMenuItem";
-            this.volumeToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.volumeToolStripMenuItem.Size = new System.Drawing.Size(169, 22);
             this.volumeToolStripMenuItem.Text = "音量 0%";
             this.volumeToolStripMenuItem.Click += new System.EventHandler(this.VolumeToolStripMenuItem_Click);
             // 
             // toolStripSeparator4
             // 
             this.toolStripSeparator4.Name = "toolStripSeparator4";
-            this.toolStripSeparator4.Size = new System.Drawing.Size(177, 6);
+            this.toolStripSeparator4.Size = new System.Drawing.Size(166, 6);
             // 
             // time1ToolStripMenuItem
             // 
             this.time1ToolStripMenuItem.Checked = true;
             this.time1ToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.time1ToolStripMenuItem.Name = "time1ToolStripMenuItem";
-            this.time1ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.time1ToolStripMenuItem.Size = new System.Drawing.Size(169, 22);
             this.time1ToolStripMenuItem.Text = "0:00:00";
             this.time1ToolStripMenuItem.Click += new System.EventHandler(this.Time1ToolStripMenuItem_Click);
             // 
@@ -162,7 +162,7 @@
             this.time2ToolStripMenuItem.Checked = true;
             this.time2ToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.time2ToolStripMenuItem.Name = "time2ToolStripMenuItem";
-            this.time2ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.time2ToolStripMenuItem.Size = new System.Drawing.Size(169, 22);
             this.time2ToolStripMenuItem.Text = "0:00:00";
             this.time2ToolStripMenuItem.Click += new System.EventHandler(this.Time2ToolStripMenuItem_Click);
             // 
@@ -171,7 +171,7 @@
             this.time3ToolStripMenuItem.Checked = true;
             this.time3ToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.time3ToolStripMenuItem.Name = "time3ToolStripMenuItem";
-            this.time3ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.time3ToolStripMenuItem.Size = new System.Drawing.Size(169, 22);
             this.time3ToolStripMenuItem.Text = "0:00:00";
             this.time3ToolStripMenuItem.Click += new System.EventHandler(this.Time3ToolStripMenuItem_Click);
             // 
@@ -180,14 +180,14 @@
             this.topMostToolStripMenuItem.Checked = true;
             this.topMostToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.topMostToolStripMenuItem.Name = "topMostToolStripMenuItem";
-            this.topMostToolStripMenuItem.Size = new System.Drawing.Size(201, 22);
+            this.topMostToolStripMenuItem.Size = new System.Drawing.Size(200, 22);
             this.topMostToolStripMenuItem.Text = "最前面";
             this.topMostToolStripMenuItem.Click += new System.EventHandler(this.TopMostToolStripMenuItem_Click);
             // 
             // maximizeToolStripMenuItem
             // 
             this.maximizeToolStripMenuItem.Name = "maximizeToolStripMenuItem";
-            this.maximizeToolStripMenuItem.Size = new System.Drawing.Size(201, 22);
+            this.maximizeToolStripMenuItem.Size = new System.Drawing.Size(200, 22);
             this.maximizeToolStripMenuItem.Text = "最大化";
             this.maximizeToolStripMenuItem.Click += new System.EventHandler(this.MaximizeToolStripMenuItem_Click);
             // 
@@ -196,45 +196,45 @@
             this.msec10ToolStripMenuItem.Checked = true;
             this.msec10ToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.msec10ToolStripMenuItem.Name = "msec10ToolStripMenuItem";
-            this.msec10ToolStripMenuItem.Size = new System.Drawing.Size(201, 22);
+            this.msec10ToolStripMenuItem.Size = new System.Drawing.Size(200, 22);
             this.msec10ToolStripMenuItem.Text = "100分の1秒を表示";
             this.msec10ToolStripMenuItem.Click += new System.EventHandler(this.Msec10ToolStripMenuItem_Click);
             // 
             // fontToolStripMenuItem
             // 
             this.fontToolStripMenuItem.Name = "fontToolStripMenuItem";
-            this.fontToolStripMenuItem.Size = new System.Drawing.Size(201, 22);
+            this.fontToolStripMenuItem.Size = new System.Drawing.Size(200, 22);
             this.fontToolStripMenuItem.Text = "フォント...";
             this.fontToolStripMenuItem.Click += new System.EventHandler(this.FontToolStripMenuItem_Click);
             // 
             // initBackColorToolStripMenuItem
             // 
             this.initBackColorToolStripMenuItem.Name = "initBackColorToolStripMenuItem";
-            this.initBackColorToolStripMenuItem.Size = new System.Drawing.Size(201, 22);
+            this.initBackColorToolStripMenuItem.Size = new System.Drawing.Size(200, 22);
             this.initBackColorToolStripMenuItem.Text = "初期背景色...";
             this.initBackColorToolStripMenuItem.Click += new System.EventHandler(this.InitBackColorToolStripMenuItem_Click);
             // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(198, 6);
+            this.toolStripSeparator2.Size = new System.Drawing.Size(197, 6);
             // 
             // volumeTestToolStripMenuItem
             // 
             this.volumeTestToolStripMenuItem.Name = "volumeTestToolStripMenuItem";
-            this.volumeTestToolStripMenuItem.Size = new System.Drawing.Size(201, 22);
+            this.volumeTestToolStripMenuItem.Size = new System.Drawing.Size(200, 22);
             this.volumeTestToolStripMenuItem.Text = "音量テスト";
             this.volumeTestToolStripMenuItem.Click += new System.EventHandler(this.VolumeTestToolStripMenuItem_Click);
             // 
             // toolStripSeparator5
             // 
             this.toolStripSeparator5.Name = "toolStripSeparator5";
-            this.toolStripSeparator5.Size = new System.Drawing.Size(198, 6);
+            this.toolStripSeparator5.Size = new System.Drawing.Size(197, 6);
             // 
             // closeToolStripMenuItem
             // 
             this.closeToolStripMenuItem.Name = "closeToolStripMenuItem";
-            this.closeToolStripMenuItem.Size = new System.Drawing.Size(201, 22);
+            this.closeToolStripMenuItem.Size = new System.Drawing.Size(200, 22);
             this.closeToolStripMenuItem.Text = "終了";
             this.closeToolStripMenuItem.Click += new System.EventHandler(this.CloseToolStripMenuItem_Click);
             // 

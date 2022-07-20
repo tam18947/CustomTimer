@@ -217,6 +217,18 @@ namespace CustomTimer
             {
                 dateTimePicker3.Value = dateTimePicker2.Value;
             }
+            else if (dateTimePicker2.Value < dateTimePicker1.Value)
+            {
+                dateTimePicker1.Value = dateTimePicker2.Value;
+            }
+        }
+
+        private void DateTimePicker3_ValueChanged(object sender, EventArgs e)
+        {
+            if (dateTimePicker3.Value < dateTimePicker2.Value)
+            {
+                dateTimePicker2.Value = dateTimePicker3.Value;
+            }
         }
     }
 }

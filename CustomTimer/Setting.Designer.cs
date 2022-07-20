@@ -105,6 +105,7 @@ namespace CustomTimer
             this.dateTimePicker3.Size = new System.Drawing.Size(80, 23);
             this.dateTimePicker3.TabIndex = 7;
             this.dateTimePicker3.Value = new System.DateTime(2000, 1, 1, 0, 0, 0, 0);
+            this.dateTimePicker3.ValueChanged += new System.EventHandler(this.DateTimePicker3_ValueChanged);
             // 
             // pictureBox1
             // 
