@@ -3,7 +3,6 @@ using System.Drawing;
 using System.Windows.Forms;
 using System.Diagnostics;
 using System.IO;
-using System.Media;
 
 namespace CustomTimer
 {
@@ -56,8 +55,7 @@ namespace CustomTimer
         /// <param name="e"></param>
         private void ContextMenuStrip1_Opening(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            Cursor.Show();
-            isHiddenCursor = false;
+            ShowCursor();
         }
 
         /// <summary>
@@ -776,46 +774,22 @@ namespace CustomTimer
 #endregion
 
 #region ベルの再生
-        private SoundPlayer player = null;
+        private AudioPlayer audioPlayer = null;
 
-        //WAVEファイルを再生する
-        private void PlaySound(string waveFile)
+        // 音声ファイルを再生する
+        private void PlaySound(string audioFile)
         {
             try
             {
-                //再生されているときは止める
-                if (player != null)
-                    StopSound();
+                if (audioPlayer != null)
+                { audioPlayer.Stop(); }
 
-                //読み込む
-                var stream = new WaveStream(File.OpenRead(waveFile))
-                {
-                    Volume = volume,
-                };
-                player = new SoundPlayer(stream);
-                //非同期再生する
-                player.Play();
-
-                //次のようにすると、ループ再生される
-                //player.PlayLooping();
-
-                //次のようにすると、最後まで再生し終えるまで待機する
-                //player.PlaySync();
+                audioPlayer = new AudioPlayer(audioFile, volume);
+                audioPlayer.Play();
             }
             catch (Exception)
             {
                 MessageBox.Show("Unplayable File");
-            }
-        }
-
-        //再生されている音を止める
-        private void StopSound()
-        {
-            if (player != null)
-            {
-                player.Stop();
-                player.Dispose();
-                player = null;
             }
         }
 #endregion
