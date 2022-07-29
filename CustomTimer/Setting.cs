@@ -1,21 +1,66 @@
 ﻿using System;
-using System.Drawing;
 using System.Windows.Forms;
 
 namespace CustomTimer
 {
     public partial class Setting : Form
     {
-        public Setting()
+        public Setting(Configuration conf)
         {
             InitializeComponent();
+            configuration = conf;
         }
 
-        private readonly DateTime baseDate = new DateTime(2000, 1, 1);
+        private readonly DateTime baseDate = new(2000, 1, 1, 0, 0, 0);
+        private readonly Configuration configuration;
 
         private void Setting_Load(object sender, EventArgs e)
         {
-            numericUpDownVolume.Value = trackBarVolume.Value;
+            // 機能
+            radioButtonCountdown.Checked = configuration.IsCountdown;
+            dateTimePickerCountdown.Value = baseDate + configuration.TimeCountdown;
+            // 音量
+            checkBoxMute.Checked = configuration.Mute;
+            numericUpDownVolume.Value = configuration.Volume;
+            // 背景色・時間
+            checkBox1.Checked = configuration.Enable1;
+            checkBox2.Checked = configuration.Enable2;
+            checkBox3.Checked = configuration.Enable3;
+            pictureBox1.BackColor = configuration.BackColor1;
+            pictureBox2.BackColor = configuration.BackColor2;
+            pictureBox3.BackColor = configuration.BackColor3;
+            dateTimePicker1.Value = baseDate + configuration.TimeSpan1;
+            dateTimePicker2.Value = baseDate + configuration.TimeSpan2;
+            dateTimePicker3.Value = baseDate + configuration.TimeSpan3;
+            // ベル
+            textBox1.Text = configuration.WaveFile1;
+            textBox2.Text = configuration.WaveFile2;
+            textBox3.Text = configuration.WaveFile3;
+        }
+
+        private void ButtonOK_Click(object sender, EventArgs e)
+        {
+            DialogResult = DialogResult.OK;
+            // 機能
+            configuration.IsCountdown = radioButtonCountdown.Checked;
+            configuration.TimeCountdown = dateTimePickerCountdown.Value - baseDate;
+            // 音量
+            configuration.Volume = trackBarVolume.Value;
+            configuration.Mute = checkBoxMute.Checked;
+            // 背景色・時間
+            configuration.BackColor1 = pictureBox1.BackColor;
+            configuration.BackColor2 = pictureBox2.BackColor;
+            configuration.BackColor3 = pictureBox3.BackColor;
+            configuration.Enable1 = checkBox1.Checked;
+            configuration.Enable2 = checkBox2.Checked;
+            configuration.Enable3 = checkBox3.Checked;
+            configuration.TimeSpan1 = dateTimePicker1.Value - baseDate;
+            configuration.TimeSpan2 = dateTimePicker2.Value - baseDate;
+            configuration.TimeSpan3 = dateTimePicker3.Value - baseDate;
+            // ベル
+            configuration.WaveFile1 = textBox1.Text;
+            configuration.WaveFile2 = textBox2.Text;
+            configuration.WaveFile3 = textBox3.Text;
         }
 
         private void PictureBox1_Click(object sender, EventArgs e)
@@ -76,103 +121,6 @@ namespace CustomTimer
             dateTimePickerCountdown.Enabled = radioButtonCountdown.Checked;
         }
 
-        /// <summary>
-        /// 時間1を設定または取得します。
-        /// </summary>
-        public TimeSpan TimeSpan1
-        {
-            get => dateTimePicker1.Value - baseDate;
-            set => dateTimePicker1.Value = baseDate + value;
-        }
-        /// <summary>
-        /// 時間2を設定または取得します。
-        /// </summary>
-        public TimeSpan TimeSpan2
-        {
-            get => dateTimePicker2.Value - baseDate;
-            set => dateTimePicker2.Value = baseDate + value;
-        }
-        /// <summary>
-        /// 時間3を設定または取得します。
-        /// </summary>
-        public TimeSpan TimeSpan3
-        {
-            get => dateTimePicker3.Value - baseDate;
-            set => dateTimePicker3.Value = baseDate + value;
-        }
-        /// <summary>
-        /// 背景色1を設定または取得します。
-        /// </summary>
-        public Color BackColor1
-        {
-            get => pictureBox1.BackColor;
-            set => pictureBox1.BackColor = value;
-        }
-        /// <summary>
-        /// 背景色2を設定または取得します。
-        /// </summary>
-        public Color BackColor2
-        {
-            get => pictureBox2.BackColor;
-            set => pictureBox2.BackColor = value;
-        }
-        /// <summary>
-        /// 背景色3を設定または取得します。
-        /// </summary>
-        public Color BackColor3
-        {
-            get => pictureBox3.BackColor;
-            set => pictureBox3.BackColor = value;
-        }
-        /// <summary>
-        /// 時間有効1を設定または取得します。
-        /// </summary>
-        public bool TimeEnabled1 { get => checkBox1.Checked; set => checkBox1.Checked = value; }
-        /// <summary>
-        /// 時間有効2を設定または取得します。
-        /// </summary>
-        public bool TimeEnabled2 { get => checkBox2.Checked; set => checkBox2.Checked = value; }
-        /// <summary>
-        /// 時間有効3を設定または取得します。
-        /// </summary>
-        public bool TimeEnabled3 { get => checkBox3.Checked; set => checkBox3.Checked = value; }
-        /// <summary>
-        /// 音量を設定または取得します。
-        /// </summary>
-        public int Volume
-        {
-            get => trackBarVolume.Value;
-            set => trackBarVolume.Value = value;
-        }
-        /// <summary>
-        /// 消音を設定または取得します。
-        /// </summary>
-        public bool Mute { get => checkBoxMute.Checked; set => checkBoxMute.Checked = value; }
-        /// <summary>
-        /// Bell sound file 1を設定または取得します。
-        /// </summary>
-        public string WaveFile1 { get => textBox1.Text; set => textBox1.Text = value; }
-        /// <summary>
-        /// Bell sound file 2を設定または取得します。
-        /// </summary>
-        public string WaveFile2 { get => textBox2.Text; set => textBox2.Text = value; }
-        /// <summary>
-        /// Bell sound file 3を設定または取得します。
-        /// </summary>
-        public string WaveFile3 { get => textBox3.Text; set => textBox3.Text = value; }
-        /// <summary>
-        /// カウントダウンの場合の時間を設定または取得します。
-        /// </summary>
-        public TimeSpan TimeSpanCountdown
-        {
-            get => dateTimePickerCountdown.Value - baseDate;
-            set => dateTimePickerCountdown.Value = baseDate + value;
-        }
-        /// <summary>
-        /// カウントダウン表示するかどうかを設定または取得します。
-        /// </summary>
-        public bool IsCountdown { get => radioButtonCountdown.Checked; set => radioButtonCountdown.Checked = value; }
-
         private void CheckBox1_CheckedChanged(object sender, EventArgs e)
         {
             if (!checkBox1.Checked)
@@ -180,6 +128,7 @@ namespace CustomTimer
                 checkBox2.Checked = false;
                 checkBox3.Checked = false;
             }
+            panel1.Enabled = checkBox1.Checked;
         }
 
         private void CheckBox2_CheckedChanged(object sender, EventArgs e)
@@ -192,6 +141,7 @@ namespace CustomTimer
             {
                 checkBox1.Checked = true;
             }
+            panel2.Enabled = checkBox2.Checked;
         }
 
         private void CheckBox3_CheckedChanged(object sender, EventArgs e)
@@ -201,6 +151,7 @@ namespace CustomTimer
                 checkBox1.Checked = true;
                 checkBox2.Checked = true;
             }
+            panel3.Enabled = checkBox3.Checked;
         }
 
         private void DateTimePicker1_ValueChanged(object sender, EventArgs e)

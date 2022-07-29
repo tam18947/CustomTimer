@@ -68,9 +68,9 @@
             this.labelTime.ForeColor = System.Drawing.Color.White;
             this.labelTime.Location = new System.Drawing.Point(12, 9);
             this.labelTime.Name = "labelTime";
-            this.labelTime.Size = new System.Drawing.Size(43, 15);
+            this.labelTime.Size = new System.Drawing.Size(34, 15);
             this.labelTime.TabIndex = 0;
-            this.labelTime.Text = "0:00:00";
+            this.labelTime.Text = "00:00";
             this.labelTime.MouseDown += new System.Windows.Forms.MouseEventHandler(this.MainForm_MouseDown);
             this.labelTime.MouseMove += new System.Windows.Forms.MouseEventHandler(this.MainForm_MouseMove);
             // 
@@ -130,7 +130,7 @@
             // countdownToolStripMenuItem
             // 
             this.countdownToolStripMenuItem.Name = "countdownToolStripMenuItem";
-            this.countdownToolStripMenuItem.Size = new System.Drawing.Size(169, 22);
+            this.countdownToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.countdownToolStripMenuItem.Text = "カウントダウンに変更";
             this.countdownToolStripMenuItem.Click += new System.EventHandler(this.CountdownToolStripMenuItem_Click);
             // 
@@ -139,22 +139,23 @@
             this.volumeToolStripMenuItem.Checked = true;
             this.volumeToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.volumeToolStripMenuItem.Name = "volumeToolStripMenuItem";
-            this.volumeToolStripMenuItem.Size = new System.Drawing.Size(169, 22);
+            this.volumeToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.volumeToolStripMenuItem.Text = "音量 0%";
             this.volumeToolStripMenuItem.Click += new System.EventHandler(this.VolumeToolStripMenuItem_Click);
             // 
             // toolStripSeparator4
             // 
             this.toolStripSeparator4.Name = "toolStripSeparator4";
-            this.toolStripSeparator4.Size = new System.Drawing.Size(166, 6);
+            this.toolStripSeparator4.Size = new System.Drawing.Size(177, 6);
             // 
             // time1ToolStripMenuItem
             // 
             this.time1ToolStripMenuItem.Checked = true;
             this.time1ToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.time1ToolStripMenuItem.Name = "time1ToolStripMenuItem";
-            this.time1ToolStripMenuItem.Size = new System.Drawing.Size(169, 22);
+            this.time1ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.time1ToolStripMenuItem.Text = "0:00:00";
+            this.time1ToolStripMenuItem.CheckedChanged += new System.EventHandler(this.Time1ToolStripMenuItem_CheckedChanged);
             this.time1ToolStripMenuItem.Click += new System.EventHandler(this.Time1ToolStripMenuItem_Click);
             // 
             // time2ToolStripMenuItem
@@ -162,8 +163,9 @@
             this.time2ToolStripMenuItem.Checked = true;
             this.time2ToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.time2ToolStripMenuItem.Name = "time2ToolStripMenuItem";
-            this.time2ToolStripMenuItem.Size = new System.Drawing.Size(169, 22);
+            this.time2ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.time2ToolStripMenuItem.Text = "0:00:00";
+            this.time2ToolStripMenuItem.CheckedChanged += new System.EventHandler(this.Time2ToolStripMenuItem_CheckedChanged);
             this.time2ToolStripMenuItem.Click += new System.EventHandler(this.Time2ToolStripMenuItem_Click);
             // 
             // time3ToolStripMenuItem
@@ -171,8 +173,9 @@
             this.time3ToolStripMenuItem.Checked = true;
             this.time3ToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.time3ToolStripMenuItem.Name = "time3ToolStripMenuItem";
-            this.time3ToolStripMenuItem.Size = new System.Drawing.Size(169, 22);
+            this.time3ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.time3ToolStripMenuItem.Text = "0:00:00";
+            this.time3ToolStripMenuItem.CheckedChanged += new System.EventHandler(this.Time3ToolStripMenuItem_CheckedChanged);
             this.time3ToolStripMenuItem.Click += new System.EventHandler(this.Time3ToolStripMenuItem_Click);
             // 
             // topMostToolStripMenuItem
@@ -193,8 +196,6 @@
             // 
             // msec10ToolStripMenuItem
             // 
-            this.msec10ToolStripMenuItem.Checked = true;
-            this.msec10ToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.msec10ToolStripMenuItem.Name = "msec10ToolStripMenuItem";
             this.msec10ToolStripMenuItem.Size = new System.Drawing.Size(200, 22);
             this.msec10ToolStripMenuItem.Text = "100分の1秒を表示";

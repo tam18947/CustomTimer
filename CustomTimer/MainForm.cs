@@ -3,6 +3,8 @@ using System.Drawing;
 using System.Windows.Forms;
 using System.Diagnostics;
 using System.IO;
+using System.Runtime.Serialization.Json;
+using System.Text;
 
 namespace CustomTimer
 {
@@ -15,39 +17,25 @@ namespace CustomTimer
 
         private void MainForm_Load(object sender, EventArgs e)
         {
-            Margin = new Padding(9);
-            ControlSizeChange(labelTime);
-
-            initColor = BackColor;
-            time1ToolStripMenuItem.BackColor = bc1 = Color.DarkGreen;
-            time2ToolStripMenuItem.BackColor = bc2 = Color.DarkOrange;
-            time3ToolStripMenuItem.BackColor = bc3 = Color.DarkRed;
-            time1ToolStripMenuItem.ForeColor = labelTime.ForeColor;
-            time2ToolStripMenuItem.ForeColor = labelTime.ForeColor;
-            time3ToolStripMenuItem.ForeColor = labelTime.ForeColor;
-            tsCountdown = new TimeSpan(0, 3, 0);
-            isCountdown = false;
-            countdownToolStripMenuItem.Text = String_ChangeToCountUpOrCountDown(isCountdown);
-            ts1 = new TimeSpan(0, 1, 0);
-            ts2 = new TimeSpan(0, 2, 0);
-            ts3 = new TimeSpan(0, 3, 0);
-            time1ToolStripMenuItem.Text = TimeSpanToString(ts1);
-            time2ToolStripMenuItem.Text = TimeSpanToString(ts2);
-            time3ToolStripMenuItem.Text = TimeSpanToString(ts3);
-            volume = 1;
-            volumeToolStripMenuItem.Text = "音量 " + volume + "%";
-            waveFile1 = @"wav\chime1.wav";
-            waveFile2 = @"wav\chime2.wav";
-            waveFile3 = @"wav\chime3.wav";
-            isStandBy = true;
+            ReadConfiguration();
 
             isHiddenCursor = false;
             previousPoint = Cursor.Position;
+            isStandBy = true;
 
             // カーソルを隠すためのタイマーのインターバル
             cursorTimer.Interval = HIDE_CURSOR_TIME;
+
+            Margin = new Padding(9);
+            TimerReset();
         }
 
+        private void MainForm_Resize(object sender, EventArgs e)
+        {
+            ControlSizeChange(labelTime);
+        }
+
+        #region メニュー操作，設定のイベント処理
         /// <summary>
         /// コンテキストメニューが開くときはカーソルを表示する
         /// </summary>
@@ -59,78 +47,17 @@ namespace CustomTimer
         }
 
         /// <summary>
-        /// Stopwatchオブジェクトを作成する
+        /// フォームを閉じる
         /// </summary>
-        private readonly Stopwatch sw = new();
-
-        private int clickInterval = 0;
-        private int clickCnt = 0;
-        private bool isFirstClick = true;
-        private int timeCnt = 0;
-
-        private Color initColor;
-        private Color bc1, bc2, bc3;
-        private TimeSpan ts1, ts2, ts3;
-        private TimeSpan tsCountdown;
-        private bool isCountdown;
-        private int volume;
-        private string waveFile1, waveFile2, waveFile3;
-        private bool isStandBy;
-
-        private const int HIDE_CURSOR_TIME = 2000; // カーソルを隠すミリ秒数
-        private bool isHiddenCursor; // カーソルが隠れているか
-        private Point previousPoint; // 前回のカーソル位置
-
-        private void MainForm_Resize(object sender, EventArgs e)
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void CloseToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            ControlSizeChange(labelTime);
+            // 終了時に設定ファイルをjsonで保存する
+            WriteConfiguration();
+            Close();
         }
 
-        private void ControlSizeChange(Control control)
-        {
-            int val = 0;
-            Point p = GetControlLocation(control);
-            while (control.Font.Size - 1 > 0 && (p.X != 0 || p.Y != 0))
-            {
-                if (p.X < 0 || p.Y < 0)
-                {
-                    // 文字を小さくする
-                    p = ResizeFont(control, -1f);
-                    if (val == 1)
-                    {
-                        break;
-                    }
-                    val = -1;
-                }
-                else
-                {
-                    // 文字を大きくする
-                    p = ResizeFont(control, 1f);
-                    if (val == -1)
-                    {
-                        // 文字を小さくする
-                        p = ResizeFont(control, -1f);
-                        break;
-                    }
-                    val = 1;
-                }
-            }
-            control.Location = p + new Size(Margin.Left, Margin.Top);
-        }
-        private Point ResizeFont(Control control, float emSize)
-        {
-            control.Font = new Font(control.Font.FontFamily, (float)(control.Font.Size + emSize), control.Font.Style);
-            return GetControlLocation(control);
-        }
-        private Point GetControlLocation(Control control)
-        {
-            Size s = ClientSize - control.ClientSize;
-            return new Point(
-                (s.Width - Margin.Left - Margin.Right) / 2,
-                (s.Height - Margin.Top - Margin.Bottom) / 2);
-        }
-
-        #region メニュー操作，設定のイベント処理
         /// <summary>
         /// メニューから開始
         /// </summary>
@@ -140,6 +67,7 @@ namespace CustomTimer
         {
             StartStop();
         }
+
         /// <summary>
         /// メニューから停止，リセット
         /// </summary>
@@ -152,12 +80,13 @@ namespace CustomTimer
 
         private void CountdownToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            isCountdown = !isCountdown;
-            countdownToolStripMenuItem.Text = String_ChangeToCountUpOrCountDown(isCountdown);
+            configuration.IsCountdown = !configuration.IsCountdown;
+            countdownToolStripMenuItem.Text = String_ChangeToCountUpOrCountDown(configuration.IsCountdown);
             // 未計測なら表示を初期化
             if (!mainTimer.Enabled)
             { TimerReset(); }
         }
+
         /// <summary>
         /// 詳細設定メニュークリック時の処理
         /// </summary>
@@ -165,60 +94,25 @@ namespace CustomTimer
         /// <param name="e"></param>
         private void SettingToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Setting setting = new()
-            {
-                Owner = this,
-                // 時間
-                TimeSpan1 = ts1,
-                TimeSpan2 = ts2,
-                TimeSpan3 = ts3,
-                TimeEnabled1 = time1ToolStripMenuItem.Checked,
-                TimeEnabled2 = time2ToolStripMenuItem.Checked,
-                TimeEnabled3 = time3ToolStripMenuItem.Checked,
-                // 背景色
-                BackColor1 = bc1,
-                BackColor2 = bc2,
-                BackColor3 = bc3,
-                // 音量
-                Volume = volume,
-                Mute = volume == 0 || !volumeToolStripMenuItem.Checked,
-                // waveファイル
-                WaveFile1 = waveFile1,
-                WaveFile2 = waveFile2,
-                WaveFile3 = waveFile3,
-                // 機能
-                TimeSpanCountdown = tsCountdown,
-                IsCountdown = isCountdown,
-            };
-            setting.ShowDialog();
+            Setting setting = new(configuration) { Owner = this, };
+            if (setting.ShowDialog() == DialogResult.OK)
             {
                 // 時間
-                ts1 = setting.TimeSpan1;
-                ts2 = setting.TimeSpan2;
-                ts3 = setting.TimeSpan3;
-                time1ToolStripMenuItem.Text = TimeSpanToString(ts1);
-                time2ToolStripMenuItem.Text = TimeSpanToString(ts2);
-                time3ToolStripMenuItem.Text = TimeSpanToString(ts3);
-                time1ToolStripMenuItem.Checked = setting.TimeEnabled1;
-                time2ToolStripMenuItem.Checked = setting.TimeEnabled2;
-                time3ToolStripMenuItem.Checked = setting.TimeEnabled3;
+                time1ToolStripMenuItem.Text = "[1]  " + TimeSpanToString(configuration.TimeSpan1);
+                time2ToolStripMenuItem.Text = "[2]  " + TimeSpanToString(configuration.TimeSpan2);
+                time3ToolStripMenuItem.Text = "[3]  " + TimeSpanToString(configuration.TimeSpan3);
+                time1ToolStripMenuItem.Checked = configuration.Enable1;
+                time2ToolStripMenuItem.Checked = configuration.Enable2;
+                time3ToolStripMenuItem.Checked = configuration.Enable3;
                 // 背景色
-                time1ToolStripMenuItem.BackColor = bc1 = setting.BackColor1;
-                time2ToolStripMenuItem.BackColor = bc2 = setting.BackColor2;
-                time3ToolStripMenuItem.BackColor = bc3 = setting.BackColor3;
+                time1ToolStripMenuItem.BackColor = configuration.BackColor1;
+                time2ToolStripMenuItem.BackColor = configuration.BackColor2;
+                time3ToolStripMenuItem.BackColor = configuration.BackColor3;
                 // 音量
-                volume = setting.Volume;
-                bool isMute = setting.Mute || setting.Volume == 0;
-                volumeToolStripMenuItem.Text = "音量 " + (isMute ? "0%" : setting.Volume + "%");
-                volumeToolStripMenuItem.Checked = !isMute;
-                // waveファイル
-                waveFile1 = setting.WaveFile1;
-                waveFile2 = setting.WaveFile2;
-                waveFile3 = setting.WaveFile3;
+                volumeToolStripMenuItem.Text = "音量 " + (configuration.Mute ? "0%" : configuration.Volume + "%");
+                volumeToolStripMenuItem.Checked = !configuration.Mute;
                 // 機能
-                tsCountdown = setting.TimeSpanCountdown;
-                isCountdown = setting.IsCountdown;
-                countdownToolStripMenuItem.Text = String_ChangeToCountUpOrCountDown(isCountdown);
+                countdownToolStripMenuItem.Text = String_ChangeToCountUpOrCountDown(configuration.IsCountdown);
                 if (!mainTimer.Enabled)
                 { TimerReset(); }
             }
@@ -227,16 +121,30 @@ namespace CustomTimer
         private void Time1ToolStripMenuItem_Click(object sender, EventArgs e)
         {
             time1ToolStripMenuItem.Checked = !time1ToolStripMenuItem.Checked;
-            if (!time1ToolStripMenuItem.Checked)
-            {
-                time2ToolStripMenuItem.Checked = false;
-                time3ToolStripMenuItem.Checked = false;
-            }
         }
 
         private void Time2ToolStripMenuItem_Click(object sender, EventArgs e)
         {
             time2ToolStripMenuItem.Checked = !time2ToolStripMenuItem.Checked;
+        }
+
+        private void Time3ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            time3ToolStripMenuItem.Checked = !time3ToolStripMenuItem.Checked;
+        }
+
+        private void Time1ToolStripMenuItem_CheckedChanged(object sender, EventArgs e)
+        {
+            if (!time1ToolStripMenuItem.Checked)
+            {
+                time2ToolStripMenuItem.Checked = false;
+                time3ToolStripMenuItem.Checked = false;
+            }
+            configuration.Enable1 = time1ToolStripMenuItem.Checked;
+        }
+
+        private void Time2ToolStripMenuItem_CheckedChanged(object sender, EventArgs e)
+        {
             if (!time2ToolStripMenuItem.Checked)
             {
                 time3ToolStripMenuItem.Checked = false;
@@ -245,60 +153,53 @@ namespace CustomTimer
             {
                 time1ToolStripMenuItem.Checked = true;
             }
+            configuration.Enable2 = time2ToolStripMenuItem.Checked;
         }
 
-        private void Time3ToolStripMenuItem_Click(object sender, EventArgs e)
+        private void Time3ToolStripMenuItem_CheckedChanged(object sender, EventArgs e)
         {
-            time3ToolStripMenuItem.Checked = !time3ToolStripMenuItem.Checked;
             if (time3ToolStripMenuItem.Checked)
             {
                 time1ToolStripMenuItem.Checked = true;
                 time2ToolStripMenuItem.Checked = true;
             }
+            configuration.Enable3 = time3ToolStripMenuItem.Checked;
         }
 
         private void VolumeToolStripMenuItem_Click(object sender, EventArgs e)
         {
             volumeToolStripMenuItem.Checked = !volumeToolStripMenuItem.Checked;
-            volumeToolStripMenuItem.Text = volumeToolStripMenuItem.Checked ? "音量 " + volume + "%" : "音量 0%";
+            volumeToolStripMenuItem.Text = volumeToolStripMenuItem.Checked ? "音量 " + configuration.Volume + "%" : "音量 0%";
+            configuration.Mute = !volumeToolStripMenuItem.Checked;
         }
 
         private void TopMostToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            TopMost = topMostToolStripMenuItem.Checked = !topMostToolStripMenuItem.Checked;
+            TopMost = configuration.TopMost
+                = topMostToolStripMenuItem.Checked
+                = !topMostToolStripMenuItem.Checked;
         }
 
         private void MaximizeToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (!maximizeToolStripMenuItem.Checked)
-            {
-                maximizeToolStripMenuItem.Checked = true;
-                MaximizeBox = true;
-                //自分自身のフォームを最大化
-                WindowState = FormWindowState.Maximized;
-            }
-            else
-            {
-                maximizeToolStripMenuItem.Checked = false;
-                MaximizeBox = false;
-                //自分自身のフォームをウィンドウサイズ
-                WindowState = FormWindowState.Normal;
-            }
+            maximizeToolStripMenuItem.Checked = !maximizeToolStripMenuItem.Checked;
+            configuration.Maximize = MaximizeBox = maximizeToolStripMenuItem.Checked;
+            WindowState = MaximizeBox ? FormWindowState.Maximized : FormWindowState.Normal;
         }
 
         private void Msec10ToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (msec10ToolStripMenuItem.Checked)
+            msec10ToolStripMenuItem.Checked = !msec10ToolStripMenuItem.Checked;
+            mainTimer.Interval = msec10ToolStripMenuItem.Checked ? 10 : 100;
+            configuration.Microsec = msec10ToolStripMenuItem.Checked;
+            if (isStandBy)
             {
-                msec10ToolStripMenuItem.Checked = false;
-                mainTimer.Interval = 100;
+                TimerReset();
             }
             else
             {
-                msec10ToolStripMenuItem.Checked = true;
-                mainTimer.Interval = 10;
+                LabelTime_TextChange();
             }
-            LabelTime_TextChange();
         }
 
         private void FontToolStripMenuItem_Click(object sender, EventArgs e)
@@ -313,6 +214,14 @@ namespace CustomTimer
                 time2ToolStripMenuItem.ForeColor = fontDialog1.Color;
                 time3ToolStripMenuItem.ForeColor = fontDialog1.Color;
                 FormSizeChange(labelTime);
+
+                configuration.ForeColor = fontDialog1.Color;
+                configuration.Font.FontFamily = fontDialog1.Font.FontFamily.Name;
+                configuration.Font.Size = fontDialog1.Font.Size;
+                configuration.Font.Bold = fontDialog1.Font.Bold;
+                configuration.Font.Italic = fontDialog1.Font.Italic;
+                configuration.Font.Strikeout = fontDialog1.Font.Strikeout;
+                configuration.Font.Underline = fontDialog1.Font.Underline;
             }
         }
 
@@ -321,7 +230,7 @@ namespace CustomTimer
             colorDialog1.Color = BackColor;
             if (colorDialog1.ShowDialog() == DialogResult.OK)
             {
-                initColor = colorDialog1.Color;
+                configuration.InitColor = colorDialog1.Color;
                 if (isStandBy)
                 { BackColor = colorDialog1.Color; }
             }
@@ -329,15 +238,10 @@ namespace CustomTimer
 
         private void VolumeTestToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (File.Exists(waveFile1))
+            if (File.Exists(configuration.WaveFile1))
             {
-                PlaySound(waveFile1);
+                PlaySound(configuration.WaveFile1);
             }
-        }
-
-        private void CloseToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            Close();
         }
         #endregion
 
@@ -370,17 +274,17 @@ namespace CustomTimer
         {
             LabelTime_TextChange();
 
-            if (ts1 <= sw.Elapsed && timeCnt == 0)
+            if (configuration.TimeSpan1 <= sw.Elapsed && timeCnt == 0)
             {
-                Backcolor_Playsound(time1ToolStripMenuItem.Checked, bc1, waveFile1);
+                Backcolor_Playsound(time1ToolStripMenuItem.Checked, configuration.BackColor1, configuration.WaveFile1);
             }
-            else if (ts2 <= sw.Elapsed && timeCnt == 1)
+            else if (configuration.TimeSpan2 <= sw.Elapsed && timeCnt == 1)
             {
-                Backcolor_Playsound(time2ToolStripMenuItem.Checked, bc2, waveFile2);
+                Backcolor_Playsound(time2ToolStripMenuItem.Checked, configuration.BackColor2, configuration.WaveFile2);
             }
-            else if (ts3 <= sw.Elapsed && timeCnt == 2)
+            else if (configuration.TimeSpan3 <= sw.Elapsed && timeCnt == 2)
             {
-                Backcolor_Playsound(time3ToolStripMenuItem.Checked, bc3, waveFile3);
+                Backcolor_Playsound(time3ToolStripMenuItem.Checked, configuration.BackColor3, configuration.WaveFile3);
             }
         }
 
@@ -402,169 +306,7 @@ namespace CustomTimer
         }
         #endregion
 
-        /// <summary>
-        /// 表示時間の書き換え，リサイズ
-        /// </summary>
-        private void LabelTime_TextChange()
-        {
-            // カウントダウン表示の場合
-            if (isCountdown)
-            {
-                TimeSpan ts = tsCountdown;
-                string s;
-                ts -= sw.Elapsed;
-                if (ts > TimeSpan.Zero)
-                {
-                    ts += TimeSpan.FromSeconds(1);
-                    s = TimeSpanToString(ts);
-                }
-                else
-                {
-                    s = TimeSpanToString(ts);
-                    if (s != TimeSpanToString(new TimeSpan()))
-                    {
-                        s = "-" + s;
-                    }
-                }
-                labelTime.Text = s;
-            }
-            else
-            {
-                labelTime.Text = TimeSpanToString(sw.Elapsed);
-            }
-
-            ControlSizeChange(labelTime);
-        }
-
-        /// <summary>
-        /// 背景色の変更，音声の再生
-        /// </summary>
-        /// <param name="check"></param>
-        /// <param name="bc"></param>
-        /// <param name="waveFile"></param>
-        private void Backcolor_Playsound(bool check, Color bc, string waveFile)
-        {
-            timeCnt++;
-            if (check)
-            {
-                BackColor = bc;
-#if false // 文字色に背景色の補色を使用する場合はTRUE
-                labelTime.ForeColor = GetComplementaryColor(bc);
-#endif 
-                if (volumeToolStripMenuItem.Checked && File.Exists(waveFile))
-                {
-                    PlaySound(waveFile);
-                }
-            }
-        }
-        /// <summary>
-        /// 引数の補色を取得する
-        /// </summary>
-        /// <param name="color"></param>
-        /// <returns></returns>
-        private static Color GetComplementaryColor(Color color)
-        {
-            //byte r = (byte)~color.R;
-            //byte g = (byte)~color.G;
-            //byte b = (byte)~color.B;
-            byte max = Math.Max(Math.Max(color.R, color.G), color.B);
-            byte min = Math.Min(Math.Min(color.R, color.G), color.B);
-            int val = max + min;
-            byte r = (byte)(val - color.R);
-            byte g = (byte)(val - color.G);
-            byte b = (byte)(val - color.B);
-
-            return Color.FromArgb(r, g, b);
-        }
-
-        /// <summary>
-        /// フォントを変更したときにフォントに合わせてフォームサイズを変更する
-        /// </summary>
-        /// <param name="control"></param>
-        private void FormSizeChange(Control control)
-        {
-            Size += control.ClientSize - ClientSize
-               + new Size(Margin.Left + Margin.Right, Margin.Top + Margin.Bottom);
-        }
-
-        /// <summary>
-        /// ストップウォッチ開始，停止操作
-        /// </summary>
-        private void StartStop()
-        {
-            isStandBy = false;
-            if (mainTimer.Enabled)
-            {
-                // タイマーを停止する
-                mainTimer.Stop();
-                // ストップウォッチを止める
-                sw.Stop();
-                startStopToolStripMenuItem.Text = "再開（ダブルクリック）";
-            }
-            else
-            {
-                // タイマーを開始する
-                mainTimer.Start();
-                // ストップウォッチを開始する
-                sw.Start();
-                startStopToolStripMenuItem.Text = "一時停止（ダブルクリック）";
-            }
-        }
-
-        /// <summary>
-        /// タイマーリセット時の初期化
-        /// </summary>
-        private void TimerReset()
-        {
-            mainTimer.Stop();
-            sw.Reset();
-            labelTime.Text = isCountdown ? TimeSpanToString(tsCountdown) : TimeSpanToString(new TimeSpan());
-            startStopToolStripMenuItem.Text = "開始（ダブルクリック）";
-            ControlSizeChange(labelTime);
-            BackColor = initColor;
-            isStandBy = true;
-            timeCnt = 0;
-        }
-
-#if false
-        /// <summary>
-        /// TimeSpanのString型への変換形式の指定。
-        /// </summary>
-        /// <param name="ts"></param>
-        /// <returns></returns>
-        private string TimeSpanToString(TimeSpan ts) => ts.ToString(@"h\:mm\:ss");
-#elif false
-        /// <summary>
-        /// TimeSpanのString型への変換形式の指定。
-        /// 1時間未満なら分単位から表示する。
-        /// </summary>
-        /// <param name="ts"></param>
-        /// <returns></returns>
-        private string TimeSpanToString(TimeSpan ts) => ts.ToString((ts.Hours != 0 ? @"h\:" : "") + @"mm\:ss");
-#else
-        /// <summary>
-        /// TimeSpanのString型への変換形式の指定。
-        /// 1時間未満なら分単位から表示する。
-        /// 必要に応じて1/100秒単位を表示する。
-        /// </summary>
-        /// <param name="ts"></param>
-        /// <returns></returns>
-        private string TimeSpanToString(TimeSpan ts)
-        {
-            string str = ts.Hours == 0 ? @"mm\:ss" : @"h\:mm\:ss";
-            if (msec10ToolStripMenuItem.Checked) { str += @"\.ff"; }
-
-            return ts.ToString(str);
-        }
-#endif
-        /// <summary>
-        /// True -> CountUp, False -> CountDown をStringで出力
-        /// </summary>
-        /// <param name="isCountdown"></param>
-        /// <returns></returns>
-        private static string String_ChangeToCountUpOrCountDown(bool isCountdown) => "カウント" + (isCountdown ? "アップ" : "ダウン") + "に変更";
-
-#region マウス操作
+        #region マウス操作
         /// <summary>
         /// マウスのクリック位置を記憶
         /// </summary>
@@ -771,9 +513,9 @@ namespace CustomTimer
             ShowCursor();
             cursorTimer.Start();
         }
-#endregion
+        #endregion
 
-#region ベルの再生
+        #region ベルの再生
         private AudioPlayer audioPlayer = null;
 
         // 音声ファイルを再生する
@@ -784,7 +526,7 @@ namespace CustomTimer
                 if (audioPlayer != null)
                 { audioPlayer.Stop(); }
 
-                audioPlayer = new AudioPlayer(audioFile, volume);
+                audioPlayer = new AudioPlayer(audioFile, configuration.Volume);
                 audioPlayer.Play();
             }
             catch (Exception)
@@ -792,7 +534,330 @@ namespace CustomTimer
                 MessageBox.Show("Unplayable File");
             }
         }
-#endregion
+        #endregion
 
+        #region シリアライズ関係
+        private const string configName = "CustomTimer.config.json";
+
+        /// <summary>
+        /// 設定ファイルを読み込んでコントロールに反映させる
+        /// </summary>
+        private void ReadConfiguration()
+        {
+            // 設定ファイルを読み込む
+            var config = DeSerialize<Configuration>(configName);
+            configuration = config is not null ? config : new Configuration();
+
+            FontStyle fontStyle = (FontStyle)(configuration.Font.Bold ? 1 : 0)
+                | (FontStyle)(configuration.Font.Italic ? 2 : 0)
+                | (FontStyle)(configuration.Font.Strikeout ? 8 : 0)
+                | (FontStyle)(configuration.Font.Underline ? 4 : 0);
+            labelTime.Font = new Font(configuration.Font.FontFamily, configuration.Font.Size, fontStyle);
+            labelTime.ForeColor = configuration.ForeColor;
+            BackColor = configuration.InitColor;
+            time1ToolStripMenuItem.ForeColor = configuration.ForeColor;
+            time2ToolStripMenuItem.ForeColor = configuration.ForeColor;
+            time3ToolStripMenuItem.ForeColor = configuration.ForeColor;
+            time1ToolStripMenuItem.Checked = configuration.Enable1;
+            time2ToolStripMenuItem.Checked = configuration.Enable2;
+            time3ToolStripMenuItem.Checked = configuration.Enable3;
+            time1ToolStripMenuItem.Text = "[1]  " + TimeSpanToString(configuration.TimeSpan1);
+            time2ToolStripMenuItem.Text = "[2]  " + TimeSpanToString(configuration.TimeSpan2);
+            time3ToolStripMenuItem.Text = "[3]  " + TimeSpanToString(configuration.TimeSpan3);
+            time1ToolStripMenuItem.BackColor = configuration.BackColor1;
+            time2ToolStripMenuItem.BackColor = configuration.BackColor2;
+            time3ToolStripMenuItem.BackColor = configuration.BackColor3;
+            volumeToolStripMenuItem.Text = "音量 " + configuration.Volume + "%";
+            volumeToolStripMenuItem.Checked = !configuration.Mute;
+            countdownToolStripMenuItem.Text = String_ChangeToCountUpOrCountDown(configuration.IsCountdown);
+
+            TopMost = topMostToolStripMenuItem.Checked = configuration.TopMost;
+            msec10ToolStripMenuItem.Checked = configuration.Microsec;
+            MaximizeBox = maximizeToolStripMenuItem.Checked = configuration.Maximize;
+            WindowState = configuration.Maximize ? FormWindowState.Maximized : FormWindowState.Normal;
+        }
+
+        /// <summary>
+        /// 設定ファイルを書き込む
+        /// </summary>
+        private void WriteConfiguration()
+        {
+            // 設定ファイルが存在していなければ保存する
+            // 設定が読み込んだものと異なっていたら保存する
+            Configuration defConfig = DeSerialize<Configuration>(configName);
+            if (defConfig == null || (
+                defConfig != null && (
+                configuration.BackColor1 != defConfig.BackColor1 ||
+                configuration.BackColor2 != defConfig.BackColor2 ||
+                configuration.BackColor3 != defConfig.BackColor3 ||
+                configuration.Enable1 != defConfig.Enable1 ||
+                configuration.Enable2 != defConfig.Enable2 ||
+                configuration.Enable3 != defConfig.Enable3 ||
+                configuration.Font.Bold != defConfig.Font.Bold ||
+                configuration.Font.FontFamily != defConfig.Font.FontFamily ||
+                configuration.Font.Italic != defConfig.Font.Italic ||
+                configuration.Font.Size != defConfig.Font.Size ||
+                configuration.Font.Strikeout != defConfig.Font.Strikeout ||
+                configuration.Font.Underline != defConfig.Font.Underline ||
+                configuration.ForeColor != defConfig.ForeColor ||
+                configuration.InitColor != defConfig.InitColor ||
+                configuration.IsCountdown != defConfig.IsCountdown ||
+                configuration.Maximize != defConfig.Maximize ||
+                configuration.Microsec != defConfig.Microsec ||
+                configuration.Mute != defConfig.Mute ||
+                configuration.TimeCountdown != defConfig.TimeCountdown ||
+                configuration.TimeSpan1 != defConfig.TimeSpan1 ||
+                configuration.TimeSpan2 != defConfig.TimeSpan2 ||
+                configuration.TimeSpan3 != defConfig.TimeSpan3 ||
+                configuration.TopMost != defConfig.TopMost ||
+                configuration.Volume != defConfig.Volume ||
+                configuration.WaveFile1 != defConfig.WaveFile1 ||
+                configuration.WaveFile2 != defConfig.WaveFile2 ||
+                configuration.WaveFile3 != defConfig.WaveFile3)))
+            {
+                Serialize(configuration, configName);
+            }
+        }
+
+        /// <summary>
+        /// json書き込み用シリアライズ
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="data"></param>
+        /// <param name="jsonfile"></param>
+        private static void Serialize<T>(T data, string jsonfile)
+        {
+            using var fs = new FileStream(jsonfile, FileMode.Create);
+            using var writer = JsonReaderWriterFactory.CreateJsonWriter(fs, Encoding.UTF8, true, true, "  ");
+            var serializer = new DataContractJsonSerializer(typeof(T));
+            serializer.WriteObject(writer, data);
+        }
+
+        /// <summary>
+        /// json読み込み用デシリアライズ
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="jsonfile"></param>
+        /// <returns></returns>
+        private static T DeSerialize<T>(string jsonfile)
+        {
+            try
+            {
+                using var ms = new FileStream(jsonfile, FileMode.Open);
+                var serializer = new DataContractJsonSerializer(typeof(T));
+                return (T)serializer.ReadObject(ms);
+            }
+            catch
+            {
+                return default;
+            }
+        }
+        #endregion
+
+        /// <summary>
+        /// Stopwatchオブジェクトを作成する
+        /// </summary>
+        private readonly Stopwatch sw = new();
+
+        private int clickInterval = 0;
+        private int clickCnt = 0;
+        private bool isFirstClick = true;
+        private int timeCnt = 0;
+
+        private Configuration configuration;
+        private bool isStandBy;
+
+        private const int HIDE_CURSOR_TIME = 2000; // カーソルを隠すミリ秒数
+        private bool isHiddenCursor; // カーソルが隠れているか
+        private Point previousPoint; // 前回のカーソル位置
+
+        private void ControlSizeChange(Control control)
+        {
+            int val = 0;
+            Point p = GetControlLocation(control);
+            while (control.Font.Size - 1 > 0 && (p.X != 0 || p.Y != 0))
+            {
+                if (p.X < 0 || p.Y < 0)
+                {
+                    // 文字を小さくする
+                    p = ResizeFont(control, -1f);
+                    if (val == 1)
+                    {
+                        break;
+                    }
+                    val = -1;
+                }
+                else
+                {
+                    // 文字を大きくする
+                    p = ResizeFont(control, 1f);
+                    if (val == -1)
+                    {
+                        // 文字を小さくする
+                        p = ResizeFont(control, -1f);
+                        break;
+                    }
+                    val = 1;
+                }
+            }
+            control.Location = p + new Size(Margin.Left, Margin.Top);
+        }
+        private Point ResizeFont(Control control, float emSize)
+        {
+            control.Font = new Font(control.Font.FontFamily, (float)(control.Font.Size + emSize), control.Font.Style);
+            return GetControlLocation(control);
+        }
+        private Point GetControlLocation(Control control)
+        {
+            Size s = ClientSize - control.ClientSize;
+            return new Point(
+                (s.Width - Margin.Left - Margin.Right) / 2,
+                (s.Height - Margin.Top - Margin.Bottom) / 2);
+        }
+
+        /// <summary>
+        /// 表示時間の書き換え，リサイズ
+        /// </summary>
+        private void LabelTime_TextChange()
+        {
+            // カウントダウン表示の場合
+            if (configuration.IsCountdown)
+            {
+                TimeSpan ts = configuration.TimeCountdown;
+                string s;
+                ts -= sw.Elapsed;
+                if (ts > TimeSpan.Zero)
+                {
+                    ts += TimeSpan.FromSeconds(1);
+                    s = TimeSpanToString(ts);
+                }
+                else
+                {
+                    s = TimeSpanToString(ts);
+                    if (s != TimeSpanToString(new TimeSpan()))
+                    {
+                        s = "-" + s;
+                    }
+                }
+                labelTime.Text = s;
+            }
+            else
+            {
+                labelTime.Text = TimeSpanToString(sw.Elapsed);
+            }
+
+            ControlSizeChange(labelTime);
+        }
+
+        /// <summary>
+        /// 背景色の変更，音声の再生
+        /// </summary>
+        /// <param name="check"></param>
+        /// <param name="bc"></param>
+        /// <param name="waveFile"></param>
+        private void Backcolor_Playsound(bool check, Color bc, string waveFile)
+        {
+            timeCnt++;
+            if (check)
+            {
+                BackColor = bc;
+#if false // 文字色に背景色の補色を使用する場合はTRUE
+                labelTime.ForeColor = GetComplementaryColor(bc);
+#endif 
+                if (volumeToolStripMenuItem.Checked && File.Exists(waveFile))
+                {
+                    PlaySound(waveFile);
+                }
+            }
+        }
+        /// <summary>
+        /// 引数の補色を取得する
+        /// </summary>
+        /// <param name="color"></param>
+        /// <returns></returns>
+        private static Color GetComplementaryColor(Color color)
+        {
+            //byte r = (byte)~color.R;
+            //byte g = (byte)~color.G;
+            //byte b = (byte)~color.B;
+            byte max = Math.Max(Math.Max(color.R, color.G), color.B);
+            byte min = Math.Min(Math.Min(color.R, color.G), color.B);
+            int val = max + min;
+            byte r = (byte)(val - color.R);
+            byte g = (byte)(val - color.G);
+            byte b = (byte)(val - color.B);
+
+            return Color.FromArgb(r, g, b);
+        }
+
+        /// <summary>
+        /// フォントを変更したときにフォントに合わせてフォームサイズを変更する
+        /// </summary>
+        /// <param name="control"></param>
+        private void FormSizeChange(Control control)
+        {
+            Size += control.ClientSize - ClientSize
+               + new Size(Margin.Left + Margin.Right, Margin.Top + Margin.Bottom);
+        }
+
+        /// <summary>
+        /// ストップウォッチ開始，停止操作
+        /// </summary>
+        private void StartStop()
+        {
+            isStandBy = false;
+            if (mainTimer.Enabled)
+            {
+                // タイマーを停止する
+                mainTimer.Stop();
+                // ストップウォッチを止める
+                sw.Stop();
+                startStopToolStripMenuItem.Text = "再開（ダブルクリック）";
+            }
+            else
+            {
+                // タイマーを開始する
+                mainTimer.Start();
+                // ストップウォッチを開始する
+                sw.Start();
+                startStopToolStripMenuItem.Text = "一時停止（ダブルクリック）";
+            }
+        }
+
+        /// <summary>
+        /// タイマーリセット時の初期化
+        /// </summary>
+        private void TimerReset()
+        {
+            mainTimer.Stop();
+            sw.Reset();
+            labelTime.Text = configuration.IsCountdown ? TimeSpanToString(configuration.TimeCountdown) : TimeSpanToString(new TimeSpan());
+            startStopToolStripMenuItem.Text = "開始（ダブルクリック）";
+            ControlSizeChange(labelTime);
+            BackColor = configuration.InitColor;
+            isStandBy = true;
+            timeCnt = 0;
+        }
+
+        /// <summary>
+        /// TimeSpanのString型への変換形式の指定。
+        /// 1時間未満なら分単位から表示する。
+        /// 必要に応じて1/100秒単位を表示する。
+        /// </summary>
+        /// <param name="ts"></param>
+        /// <returns></returns>
+        private string TimeSpanToString(TimeSpan ts)
+        {
+            string str = ts.Hours == 0 ? @"mm\:ss" : @"h\:mm\:ss";
+            if (configuration.Microsec) { str += @"\.ff"; }
+
+            return ts.ToString(str);
+        }
+        /// <summary>
+        /// True -> CountUp, False -> CountDown をStringで出力
+        /// </summary>
+        /// <param name="isCountdown"></param>
+        /// <returns></returns>
+        private static string String_ChangeToCountUpOrCountDown(bool isCountdown) => "カウント" + (isCountdown ? "アップ" : "ダウン") + "に変更";
     }
 }
