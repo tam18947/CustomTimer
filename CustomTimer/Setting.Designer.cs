@@ -172,8 +172,6 @@ namespace CustomTimer
             // checkBoxMute
             // 
             this.checkBoxMute.AutoSize = true;
-            this.checkBoxMute.Checked = true;
-            this.checkBoxMute.CheckState = System.Windows.Forms.CheckState.Checked;
             this.checkBoxMute.Location = new System.Drawing.Point(6, 369);
             this.checkBoxMute.Name = "checkBoxMute";
             this.checkBoxMute.Size = new System.Drawing.Size(50, 19);
