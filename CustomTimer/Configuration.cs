@@ -6,6 +6,10 @@ namespace CustomTimer
     public class Configuration
     {
         /// <summary>
+        /// ウィンドウサイズ
+        /// </summary>
+        public Size ClientSize { get; set; } = new Size(150, 70);
+        /// <summary>
         /// 最前面
         /// </summary>
         public bool TopMost { get; set; } = true;

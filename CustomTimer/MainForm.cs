@@ -548,6 +548,7 @@ namespace CustomTimer
             var config = DeSerialize<Configuration>(configName);
             configuration = config is not null ? config : new Configuration();
 
+            ClientSize = configuration.ClientSize;
             FontStyle fontStyle = (FontStyle)(configuration.Font.Bold ? 1 : 0)
                 | (FontStyle)(configuration.Font.Italic ? 2 : 0)
                 | (FontStyle)(configuration.Font.Strikeout ? 8 : 0)
@@ -582,11 +583,13 @@ namespace CustomTimer
         /// </summary>
         private void WriteConfiguration()
         {
+            configuration.ClientSize = ClientSize;
             // 設定ファイルが存在していなければ保存する
             // 設定が読み込んだものと異なっていたら保存する
             Configuration defConfig = DeSerialize<Configuration>(configName);
             if (defConfig == null || (
                 defConfig != null && (
+                configuration.ClientSize != defConfig.ClientSize ||
                 configuration.BackColor1 != defConfig.BackColor1 ||
                 configuration.BackColor2 != defConfig.BackColor2 ||
                 configuration.BackColor3 != defConfig.BackColor3 ||

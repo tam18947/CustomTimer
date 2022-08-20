@@ -130,7 +130,7 @@
             // countdownToolStripMenuItem
             // 
             this.countdownToolStripMenuItem.Name = "countdownToolStripMenuItem";
-            this.countdownToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.countdownToolStripMenuItem.Size = new System.Drawing.Size(169, 22);
             this.countdownToolStripMenuItem.Text = "カウントダウンに変更";
             this.countdownToolStripMenuItem.Click += new System.EventHandler(this.CountdownToolStripMenuItem_Click);
             // 
@@ -139,21 +139,21 @@
             this.volumeToolStripMenuItem.Checked = true;
             this.volumeToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.volumeToolStripMenuItem.Name = "volumeToolStripMenuItem";
-            this.volumeToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.volumeToolStripMenuItem.Size = new System.Drawing.Size(169, 22);
             this.volumeToolStripMenuItem.Text = "音量 0%";
             this.volumeToolStripMenuItem.Click += new System.EventHandler(this.VolumeToolStripMenuItem_Click);
             // 
             // toolStripSeparator4
             // 
             this.toolStripSeparator4.Name = "toolStripSeparator4";
-            this.toolStripSeparator4.Size = new System.Drawing.Size(177, 6);
+            this.toolStripSeparator4.Size = new System.Drawing.Size(166, 6);
             // 
             // time1ToolStripMenuItem
             // 
             this.time1ToolStripMenuItem.Checked = true;
             this.time1ToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.time1ToolStripMenuItem.Name = "time1ToolStripMenuItem";
-            this.time1ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.time1ToolStripMenuItem.Size = new System.Drawing.Size(169, 22);
             this.time1ToolStripMenuItem.Text = "0:00:00";
             this.time1ToolStripMenuItem.CheckedChanged += new System.EventHandler(this.Time1ToolStripMenuItem_CheckedChanged);
             this.time1ToolStripMenuItem.Click += new System.EventHandler(this.Time1ToolStripMenuItem_Click);
@@ -163,7 +163,7 @@
             this.time2ToolStripMenuItem.Checked = true;
             this.time2ToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.time2ToolStripMenuItem.Name = "time2ToolStripMenuItem";
-            this.time2ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.time2ToolStripMenuItem.Size = new System.Drawing.Size(169, 22);
             this.time2ToolStripMenuItem.Text = "0:00:00";
             this.time2ToolStripMenuItem.CheckedChanged += new System.EventHandler(this.Time2ToolStripMenuItem_CheckedChanged);
             this.time2ToolStripMenuItem.Click += new System.EventHandler(this.Time2ToolStripMenuItem_Click);
@@ -173,7 +173,7 @@
             this.time3ToolStripMenuItem.Checked = true;
             this.time3ToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.time3ToolStripMenuItem.Name = "time3ToolStripMenuItem";
-            this.time3ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.time3ToolStripMenuItem.Size = new System.Drawing.Size(169, 22);
             this.time3ToolStripMenuItem.Text = "0:00:00";
             this.time3ToolStripMenuItem.CheckedChanged += new System.EventHandler(this.Time3ToolStripMenuItem_CheckedChanged);
             this.time3ToolStripMenuItem.Click += new System.EventHandler(this.Time3ToolStripMenuItem_Click);
@@ -260,7 +260,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Black;
-            this.ClientSize = new System.Drawing.Size(140, 54);
+            this.ClientSize = new System.Drawing.Size(134, 54);
             this.ContextMenuStrip = this.contextMenuStrip1;
             this.ControlBox = false;
             this.Controls.Add(this.labelTime);
@@ -268,7 +268,7 @@
             this.Margin = new System.Windows.Forms.Padding(4);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
-            this.MinimumSize = new System.Drawing.Size(156, 70);
+            this.MinimumSize = new System.Drawing.Size(150, 70);
             this.Name = "MainForm";
             this.TopMost = true;
             this.Load += new System.EventHandler(this.MainForm_Load);
