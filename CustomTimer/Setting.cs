@@ -181,5 +181,22 @@ namespace CustomTimer
                 dateTimePicker2.Value = dateTimePicker3.Value;
             }
         }
+
+        private AudioPlayer audioPlayer = null;
+        private void ButtonVolumeTest_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (audioPlayer != null)
+                { audioPlayer.Stop(); }
+
+                audioPlayer = new AudioPlayer(textBox1.Text, trackBarVolume.Value);
+                audioPlayer.Play();
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Unplayable File");
+            }
+        }
     }
 }

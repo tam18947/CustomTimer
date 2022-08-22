@@ -48,8 +48,9 @@
             this.fontToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.initBackColorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
-            this.volumeTestToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
+            this.autoSaveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.versionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.closeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mainTimer = new System.Windows.Forms.Timer(this.components);
             this.fontDialog1 = new System.Windows.Forms.FontDialog();
@@ -87,11 +88,12 @@
             this.fontToolStripMenuItem,
             this.initBackColorToolStripMenuItem,
             this.toolStripSeparator2,
-            this.volumeTestToolStripMenuItem,
-            this.toolStripSeparator5,
+            this.autoSaveToolStripMenuItem,
+            this.versionToolStripMenuItem,
+            this.toolStripSeparator3,
             this.closeToolStripMenuItem});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(201, 242);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(201, 264);
             this.contextMenuStrip1.Opening += new System.ComponentModel.CancelEventHandler(this.ContextMenuStrip1_Opening);
             // 
             // startStopToolStripMenuItem
@@ -220,17 +222,24 @@
             this.toolStripSeparator2.Name = "toolStripSeparator2";
             this.toolStripSeparator2.Size = new System.Drawing.Size(197, 6);
             // 
-            // volumeTestToolStripMenuItem
+            // autoSaveToolStripMenuItem
             // 
-            this.volumeTestToolStripMenuItem.Name = "volumeTestToolStripMenuItem";
-            this.volumeTestToolStripMenuItem.Size = new System.Drawing.Size(200, 22);
-            this.volumeTestToolStripMenuItem.Text = "音量テスト";
-            this.volumeTestToolStripMenuItem.Click += new System.EventHandler(this.VolumeTestToolStripMenuItem_Click);
+            this.autoSaveToolStripMenuItem.Name = "autoSaveToolStripMenuItem";
+            this.autoSaveToolStripMenuItem.Size = new System.Drawing.Size(200, 22);
+            this.autoSaveToolStripMenuItem.Text = "設定の自動保存";
+            this.autoSaveToolStripMenuItem.Click += new System.EventHandler(this.AutoSaveToolStripMenuItem_Click);
             // 
-            // toolStripSeparator5
+            // versionToolStripMenuItem
             // 
-            this.toolStripSeparator5.Name = "toolStripSeparator5";
-            this.toolStripSeparator5.Size = new System.Drawing.Size(197, 6);
+            this.versionToolStripMenuItem.Name = "versionToolStripMenuItem";
+            this.versionToolStripMenuItem.Size = new System.Drawing.Size(200, 22);
+            this.versionToolStripMenuItem.Text = "バージョン情報...";
+            this.versionToolStripMenuItem.Click += new System.EventHandler(this.VersionToolStripMenuItem_Click);
+            // 
+            // toolStripSeparator3
+            // 
+            this.toolStripSeparator3.Name = "toolStripSeparator3";
+            this.toolStripSeparator3.Size = new System.Drawing.Size(197, 6);
             // 
             // closeToolStripMenuItem
             // 
@@ -308,8 +317,9 @@
         private System.Windows.Forms.ToolStripMenuItem msec10ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem fontToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem initBackColorToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem volumeTestToolStripMenuItem;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
+        private System.Windows.Forms.ToolStripMenuItem versionToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
+        private System.Windows.Forms.ToolStripMenuItem autoSaveToolStripMenuItem;
     }
 }
 
