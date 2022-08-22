@@ -94,7 +94,7 @@ namespace CustomTimer
         /// <param name="e"></param>
         private void SettingToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Setting setting = new(configuration) { Owner = this, };
+            Setting setting = new(configuration);
             if (setting.ShowDialog() == DialogResult.OK)
             {
                 // 時間
@@ -236,12 +236,20 @@ namespace CustomTimer
             }
         }
 
-        private void VolumeTestToolStripMenuItem_Click(object sender, EventArgs e)
+        private void AutoSaveToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (File.Exists(configuration.WaveFile1))
-            {
-                PlaySound(configuration.WaveFile1);
-            }
+            autoSaveToolStripMenuItem.Checked = !autoSaveToolStripMenuItem.Checked;
+        }
+
+        /// <summary>
+        /// バージョン情報
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void VersionToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("CustomTimer v1.0.3\n" + "https://github.com/tam18947/CustomTimer",
+                "バージョン情報", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
         #endregion
 
@@ -519,14 +527,14 @@ namespace CustomTimer
         private AudioPlayer audioPlayer = null;
 
         // 音声ファイルを再生する
-        private void PlaySound(string audioFile)
+        private void PlaySound(string audioFile, int volume)
         {
             try
             {
                 if (audioPlayer != null)
                 { audioPlayer.Stop(); }
 
-                audioPlayer = new AudioPlayer(audioFile, configuration.Volume);
+                audioPlayer = new AudioPlayer(audioFile, volume);
                 audioPlayer.Play();
             }
             catch (Exception)
@@ -576,6 +584,9 @@ namespace CustomTimer
             msec10ToolStripMenuItem.Checked = configuration.Microsec;
             MaximizeBox = maximizeToolStripMenuItem.Checked = configuration.Maximize;
             WindowState = configuration.Maximize ? FormWindowState.Maximized : FormWindowState.Normal;
+
+            // 設定ファイルを読み込んだら自動保存をONにする
+            autoSaveToolStripMenuItem.Checked = config is not null;
         }
 
         /// <summary>
@@ -583,42 +594,52 @@ namespace CustomTimer
         /// </summary>
         private void WriteConfiguration()
         {
-            configuration.ClientSize = ClientSize;
-            // 設定ファイルが存在していなければ保存する
-            // 設定が読み込んだものと異なっていたら保存する
-            Configuration defConfig = DeSerialize<Configuration>(configName);
-            if (defConfig == null || (
-                defConfig != null && (
-                configuration.ClientSize != defConfig.ClientSize ||
-                configuration.BackColor1 != defConfig.BackColor1 ||
-                configuration.BackColor2 != defConfig.BackColor2 ||
-                configuration.BackColor3 != defConfig.BackColor3 ||
-                configuration.Enable1 != defConfig.Enable1 ||
-                configuration.Enable2 != defConfig.Enable2 ||
-                configuration.Enable3 != defConfig.Enable3 ||
-                configuration.Font.Bold != defConfig.Font.Bold ||
-                configuration.Font.FontFamily != defConfig.Font.FontFamily ||
-                configuration.Font.Italic != defConfig.Font.Italic ||
-                configuration.Font.Size != defConfig.Font.Size ||
-                configuration.Font.Strikeout != defConfig.Font.Strikeout ||
-                configuration.Font.Underline != defConfig.Font.Underline ||
-                configuration.ForeColor != defConfig.ForeColor ||
-                configuration.InitColor != defConfig.InitColor ||
-                configuration.IsCountdown != defConfig.IsCountdown ||
-                configuration.Maximize != defConfig.Maximize ||
-                configuration.Microsec != defConfig.Microsec ||
-                configuration.Mute != defConfig.Mute ||
-                configuration.TimeCountdown != defConfig.TimeCountdown ||
-                configuration.TimeSpan1 != defConfig.TimeSpan1 ||
-                configuration.TimeSpan2 != defConfig.TimeSpan2 ||
-                configuration.TimeSpan3 != defConfig.TimeSpan3 ||
-                configuration.TopMost != defConfig.TopMost ||
-                configuration.Volume != defConfig.Volume ||
-                configuration.WaveFile1 != defConfig.WaveFile1 ||
-                configuration.WaveFile2 != defConfig.WaveFile2 ||
-                configuration.WaveFile3 != defConfig.WaveFile3)))
+            if (autoSaveToolStripMenuItem.Checked)
             {
-                Serialize(configuration, configName);
+                configuration.ClientSize = ClientSize;
+                // 設定ファイルが存在していなければ保存する
+                // 設定が読み込んだものと異なっていたら保存する
+                Configuration defConfig = DeSerialize<Configuration>(configName);
+                if (defConfig == null || (
+                    defConfig != null && (
+                    configuration.ClientSize != defConfig.ClientSize ||
+                    configuration.BackColor1 != defConfig.BackColor1 ||
+                    configuration.BackColor2 != defConfig.BackColor2 ||
+                    configuration.BackColor3 != defConfig.BackColor3 ||
+                    configuration.Enable1 != defConfig.Enable1 ||
+                    configuration.Enable2 != defConfig.Enable2 ||
+                    configuration.Enable3 != defConfig.Enable3 ||
+                    configuration.Font.Bold != defConfig.Font.Bold ||
+                    configuration.Font.FontFamily != defConfig.Font.FontFamily ||
+                    configuration.Font.Italic != defConfig.Font.Italic ||
+                    configuration.Font.Size != defConfig.Font.Size ||
+                    configuration.Font.Strikeout != defConfig.Font.Strikeout ||
+                    configuration.Font.Underline != defConfig.Font.Underline ||
+                    configuration.ForeColor != defConfig.ForeColor ||
+                    configuration.InitColor != defConfig.InitColor ||
+                    configuration.IsCountdown != defConfig.IsCountdown ||
+                    configuration.Maximize != defConfig.Maximize ||
+                    configuration.Microsec != defConfig.Microsec ||
+                    configuration.Mute != defConfig.Mute ||
+                    configuration.TimeCountdown != defConfig.TimeCountdown ||
+                    configuration.TimeSpan1 != defConfig.TimeSpan1 ||
+                    configuration.TimeSpan2 != defConfig.TimeSpan2 ||
+                    configuration.TimeSpan3 != defConfig.TimeSpan3 ||
+                    configuration.TopMost != defConfig.TopMost ||
+                    configuration.Volume != defConfig.Volume ||
+                    configuration.WaveFile1 != defConfig.WaveFile1 ||
+                    configuration.WaveFile2 != defConfig.WaveFile2 ||
+                    configuration.WaveFile3 != defConfig.WaveFile3)))
+                {
+                    Serialize(configuration, configName);
+                }
+            }
+            else
+            {
+                if (File.Exists(configName))
+                {
+                    File.Delete(configName);
+                }
             }
         }
 
@@ -764,12 +785,12 @@ namespace CustomTimer
             if (check)
             {
                 BackColor = bc;
-#if false // 文字色に背景色の補色を使用する場合はTRUE
+#if true // 文字色に背景色の補色を使用する場合はTRUE
                 labelTime.ForeColor = GetComplementaryColor(bc);
 #endif 
                 if (volumeToolStripMenuItem.Checked && File.Exists(waveFile))
                 {
-                    PlaySound(waveFile);
+                    PlaySound(waveFile, configuration.Volume);
                 }
             }
         }

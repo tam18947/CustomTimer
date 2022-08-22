@@ -56,6 +56,7 @@ namespace CustomTimer
             this.radioButtonCountup = new System.Windows.Forms.RadioButton();
             this.groupBoxVolume = new System.Windows.Forms.GroupBox();
             this.buttonOK = new System.Windows.Forms.Button();
+            this.buttonVolumeTest = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
@@ -76,7 +77,7 @@ namespace CustomTimer
             this.dateTimePicker1.Name = "dateTimePicker1";
             this.dateTimePicker1.ShowUpDown = true;
             this.dateTimePicker1.Size = new System.Drawing.Size(80, 23);
-            this.dateTimePicker1.TabIndex = 1;
+            this.dateTimePicker1.TabIndex = 0;
             this.dateTimePicker1.Value = new System.DateTime(2000, 1, 1, 23, 59, 59, 0);
             this.dateTimePicker1.ValueChanged += new System.EventHandler(this.DateTimePicker1_ValueChanged);
             // 
@@ -87,7 +88,7 @@ namespace CustomTimer
             this.dateTimePicker2.Name = "dateTimePicker2";
             this.dateTimePicker2.ShowUpDown = true;
             this.dateTimePicker2.Size = new System.Drawing.Size(80, 23);
-            this.dateTimePicker2.TabIndex = 4;
+            this.dateTimePicker2.TabIndex = 0;
             this.dateTimePicker2.Value = new System.DateTime(2000, 1, 1, 23, 59, 59, 0);
             this.dateTimePicker2.ValueChanged += new System.EventHandler(this.DateTimePicker2_ValueChanged);
             // 
@@ -98,7 +99,7 @@ namespace CustomTimer
             this.dateTimePicker3.Name = "dateTimePicker3";
             this.dateTimePicker3.ShowUpDown = true;
             this.dateTimePicker3.Size = new System.Drawing.Size(80, 23);
-            this.dateTimePicker3.TabIndex = 7;
+            this.dateTimePicker3.TabIndex = 0;
             this.dateTimePicker3.Value = new System.DateTime(2000, 1, 1, 23, 59, 59, 0);
             this.dateTimePicker3.ValueChanged += new System.EventHandler(this.DateTimePicker3_ValueChanged);
             // 
@@ -153,7 +154,7 @@ namespace CustomTimer
             this.checkBox2.Location = new System.Drawing.Point(6, 105);
             this.checkBox2.Name = "checkBox2";
             this.checkBox2.Size = new System.Drawing.Size(46, 19);
-            this.checkBox2.TabIndex = 3;
+            this.checkBox2.TabIndex = 2;
             this.checkBox2.Text = "2nd";
             this.checkBox2.UseVisualStyleBackColor = true;
             this.checkBox2.CheckedChanged += new System.EventHandler(this.CheckBox2_CheckedChanged);
@@ -164,7 +165,7 @@ namespace CustomTimer
             this.checkBox3.Location = new System.Drawing.Point(6, 188);
             this.checkBox3.Name = "checkBox3";
             this.checkBox3.Size = new System.Drawing.Size(43, 19);
-            this.checkBox3.TabIndex = 6;
+            this.checkBox3.TabIndex = 4;
             this.checkBox3.Text = "3rd";
             this.checkBox3.UseVisualStyleBackColor = true;
             this.checkBox3.CheckedChanged += new System.EventHandler(this.CheckBox3_CheckedChanged);
@@ -215,21 +216,21 @@ namespace CustomTimer
             this.textBox1.Location = new System.Drawing.Point(3, 32);
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(109, 23);
-            this.textBox1.TabIndex = 2;
+            this.textBox1.TabIndex = 1;
             // 
             // textBox2
             // 
             this.textBox2.Location = new System.Drawing.Point(3, 32);
             this.textBox2.Name = "textBox2";
             this.textBox2.Size = new System.Drawing.Size(109, 23);
-            this.textBox2.TabIndex = 5;
+            this.textBox2.TabIndex = 1;
             // 
             // textBox3
             // 
             this.textBox3.Location = new System.Drawing.Point(3, 32);
             this.textBox3.Name = "textBox3";
             this.textBox3.Size = new System.Drawing.Size(109, 23);
-            this.textBox3.TabIndex = 8;
+            this.textBox3.TabIndex = 1;
             // 
             // groupBoxTime
             // 
@@ -258,7 +259,7 @@ namespace CustomTimer
             this.panel3.Margin = new System.Windows.Forms.Padding(0);
             this.panel3.Name = "panel3";
             this.panel3.Size = new System.Drawing.Size(115, 58);
-            this.panel3.TabIndex = 10;
+            this.panel3.TabIndex = 5;
             // 
             // panel1
             // 
@@ -271,7 +272,7 @@ namespace CustomTimer
             this.panel1.Margin = new System.Windows.Forms.Padding(0);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(115, 58);
-            this.panel1.TabIndex = 4;
+            this.panel1.TabIndex = 1;
             // 
             // panel2
             // 
@@ -284,7 +285,7 @@ namespace CustomTimer
             this.panel2.Margin = new System.Windows.Forms.Padding(0);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(115, 58);
-            this.panel2.TabIndex = 9;
+            this.panel2.TabIndex = 3;
             // 
             // groupBoxTimer
             // 
@@ -340,10 +341,20 @@ namespace CustomTimer
             this.buttonOK.Location = new System.Drawing.Point(132, 428);
             this.buttonOK.Name = "buttonOK";
             this.buttonOK.Size = new System.Drawing.Size(75, 23);
-            this.buttonOK.TabIndex = 5;
+            this.buttonOK.TabIndex = 4;
             this.buttonOK.Text = "OK";
             this.buttonOK.UseVisualStyleBackColor = true;
             this.buttonOK.Click += new System.EventHandler(this.ButtonOK_Click);
+            // 
+            // buttonVolumeTest
+            // 
+            this.buttonVolumeTest.Location = new System.Drawing.Point(12, 428);
+            this.buttonVolumeTest.Name = "buttonVolumeTest";
+            this.buttonVolumeTest.Size = new System.Drawing.Size(75, 23);
+            this.buttonVolumeTest.TabIndex = 3;
+            this.buttonVolumeTest.Text = "音量テスト";
+            this.buttonVolumeTest.UseVisualStyleBackColor = true;
+            this.buttonVolumeTest.Click += new System.EventHandler(this.ButtonVolumeTest_Click);
             // 
             // Setting
             // 
@@ -352,6 +363,7 @@ namespace CustomTimer
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
             this.ClientSize = new System.Drawing.Size(219, 463);
+            this.Controls.Add(this.buttonVolumeTest);
             this.Controls.Add(this.buttonOK);
             this.Controls.Add(this.groupBoxVolume);
             this.Controls.Add(this.groupBoxTimer);
@@ -414,5 +426,6 @@ namespace CustomTimer
         private System.Windows.Forms.Panel panel3;
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.Button buttonOK;
+        private System.Windows.Forms.Button buttonVolumeTest;
     }
 }
