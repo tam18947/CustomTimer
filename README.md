@@ -1,4 +1,4 @@
-# CustomTimer v1.0.3
+# CustomTimer v1.0.4
 
 ## 開始／一時停止／再開
 - ダブルクリック　または
