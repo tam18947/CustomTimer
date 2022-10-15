@@ -248,7 +248,7 @@ namespace CustomTimer
         /// <param name="e"></param>
         private void VersionToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("CustomTimer v1.0.3", "バージョン情報", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            MessageBox.Show("CustomTimer v1.0.4", "バージョン情報", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
         #endregion
 
@@ -784,9 +784,9 @@ namespace CustomTimer
             if (check)
             {
                 BackColor = bc;
-#if true // 文字色に背景色の補色を使用する場合はTRUE
+#if false // 文字色に背景色の補色を使用する場合はTRUE
                 labelTime.ForeColor = GetComplementaryColor(bc);
-#endif 
+#endif
                 if (volumeToolStripMenuItem.Checked && File.Exists(waveFile))
                 {
                     PlaySound(waveFile, configuration.Volume);
