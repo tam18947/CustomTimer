@@ -252,7 +252,7 @@ namespace CustomTimer
         /// <param name="e"></param>
         private void VersionToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("CustomTimer v1.0.4", "バージョン情報", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            MessageBox.Show("CustomTimer v1.0.5", "バージョン情報", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
         #endregion
 
