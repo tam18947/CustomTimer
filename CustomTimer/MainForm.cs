@@ -94,8 +94,12 @@ namespace CustomTimer
         /// <param name="e"></param>
         private void SettingToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Setting setting = new(configuration);
-            if (setting.ShowDialog() == DialogResult.OK)
+            Setting setting = new(configuration)
+            {
+                //フォームを親フォームの真ん中に表示する
+                StartPosition = FormStartPosition.CenterParent
+            };
+            if (setting.ShowDialog(this) == DialogResult.OK)
             {
                 // 時間
                 time1ToolStripMenuItem.Text = "[1]  " + TimeSpanToString(configuration.TimeSpan1);
@@ -248,7 +252,7 @@ namespace CustomTimer
         /// <param name="e"></param>
         private void VersionToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("CustomTimer v1.0.4", "バージョン情報", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            MessageBox.Show("CustomTimer v1.0.5", "バージョン情報", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
         #endregion
 
@@ -530,8 +534,7 @@ namespace CustomTimer
         {
             try
             {
-                if (audioPlayer != null)
-                { audioPlayer.Stop(); }
+                audioPlayer?.Stop();
 
                 audioPlayer = new AudioPlayer(audioFile, volume);
                 audioPlayer.Play();
@@ -786,7 +789,6 @@ namespace CustomTimer
                 BackColor = bc;
 #if false // 文字色に背景色の補色を使用する場合はTRUE
                 labelTime.ForeColor = GetComplementaryColor(bc);
-#endif
                 if (volumeToolStripMenuItem.Checked && File.Exists(waveFile))
                 {
                     PlaySound(waveFile, configuration.Volume);
@@ -812,6 +814,14 @@ namespace CustomTimer
 
             return Color.FromArgb(r, g, b);
         }
+#else
+                if (volumeToolStripMenuItem.Checked && File.Exists(waveFile))
+                {
+                    PlaySound(waveFile, configuration.Volume);
+                }
+            }
+        }
+#endif
 
         /// <summary>
         /// フォントを変更したときにフォントに合わせてフォームサイズを変更する

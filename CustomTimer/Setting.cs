@@ -187,9 +187,7 @@ namespace CustomTimer
         {
             try
             {
-                if (audioPlayer != null)
-                { audioPlayer.Stop(); }
-
+                audioPlayer?.Stop();
                 audioPlayer = new AudioPlayer(textBox1.Text, trackBarVolume.Value);
                 audioPlayer.Play();
             }
