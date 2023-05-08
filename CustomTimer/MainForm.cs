@@ -1,8 +1,4 @@
-﻿using System;
-using System.Drawing;
-using System.Windows.Forms;
-using System.Diagnostics;
-using System.IO;
+﻿using System.Diagnostics;
 using System.Runtime.Serialization.Json;
 using System.Text;
 
@@ -252,30 +248,11 @@ namespace CustomTimer
         /// <param name="e"></param>
         private void VersionToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("CustomTimer v1.0.5", "バージョン情報", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            MessageBox.Show("CustomTimer v1.0.6", "バージョン情報", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
         #endregion
 
         #region タイマーイベント処理
-        /// <summary>
-        /// クリック間隔の時間の計測
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void ClickIntervalTimer_Tick(object sender, EventArgs e)
-        {
-            // 時間計測
-            clickInterval += clickIntervalTimer.Interval;
-            // ダブルクリック間隔の時間を超えたらリセット
-            if (SystemInformation.DoubleClickTime < clickInterval)
-            {
-                clickIntervalTimer.Stop();
-                clickInterval = 0;
-                isFirstClick = true;
-                clickCnt = 0;
-            }
-        }
-
         /// <summary>
         /// タイマー計測時の時間表示の更新
         /// </summary>
@@ -358,11 +335,44 @@ namespace CustomTimer
                 // クリック数カウント
                 clickCnt++;
 
-                // ダブルクリックだったらトリプルクリックの計測開始
-                if (isFirstClick)
+                // クリックだったらダブルクリックの計測開始
+                if (clickCnt == 1)
                 {
-                    isFirstClick = false;
-                    clickIntervalTimer.Start();
+                    clickInterval = 0;
+                    System.Windows.Forms.Timer t = new()
+                    {
+                        Interval = SystemInformation.DoubleClickTime
+                    };
+                    t.Start();
+                    t.Tick += (s, args) =>
+                    {
+                        if (clickCnt == 1)
+                        {
+                            clickCnt = 0;
+                        }
+                        t.Stop();
+                    };
+                }
+                // ダブルクリックだったらトリプルクリックの計測開始
+                else
+                {
+                    System.Windows.Forms.Timer t = new()
+                    {
+                        Interval = 100
+                    };
+                    t.Start();
+                    t.Tick += (s, args) =>
+                    {
+                        // 時間計測
+                        clickInterval += t.Interval;
+                        // ダブルクリック間隔の時間を超えたらリセット
+                        if (SystemInformation.DoubleClickTime < clickInterval)
+                        {
+                            t.Stop();
+                            clickInterval = 0;
+                            clickCnt = 0;
+                        }
+                    };
                 }
 
                 // ダブルクリック間隔の時間を超えるまで処理
@@ -687,7 +697,6 @@ namespace CustomTimer
 
         private int clickInterval = 0;
         private int clickCnt = 0;
-        private bool isFirstClick = true;
         private int timeCnt = 0;
 
         private Configuration configuration;
@@ -813,15 +822,14 @@ namespace CustomTimer
             byte b = (byte)(val - color.B);
 
             return Color.FromArgb(r, g, b);
-        }
 #else
                 if (volumeToolStripMenuItem.Checked && File.Exists(waveFile))
                 {
                     PlaySound(waveFile, configuration.Volume);
                 }
             }
-        }
 #endif
+        }
 
         /// <summary>
         /// フォントを変更したときにフォントに合わせてフォームサイズを変更する
