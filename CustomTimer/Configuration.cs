@@ -1,7 +1,4 @@
-﻿using System;
-using System.Drawing;
-
-namespace CustomTimer
+﻿namespace CustomTimer
 {
     public class Configuration
     {
