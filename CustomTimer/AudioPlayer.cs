@@ -1,55 +1,56 @@
-﻿using System.IO;
-using NAudio.Wave;
+﻿using NAudio.Wave;
 
-namespace CustomTimer
+namespace CustomTimer;
+
+internal class AudioPlayer
 {
-    internal class AudioPlayer
+    internal AudioPlayer(string audioPath, int volume = 100)
     {
-        internal AudioPlayer(string audioPath, int volume = 100)
+        if (Path.GetExtension(audioPath) != ".mp3" &&
+            Path.GetExtension(audioPath) != ".wav")
         {
-            if (Path.GetExtension(audioPath) != ".mp3" &&
-                Path.GetExtension(audioPath) != ".wav")
-            {
-                return;
-            }
-
-            audioReader = new AudioFileReader(audioPath);
-            if (audioReader != null)
-            {
-                waveOut = new WaveOut();
-                waveOut.Init(audioReader);
-                audioReader.Volume = volume * 0.01f;
-            }
+            return;
         }
 
-        private readonly WaveOut waveOut = null;
-        private readonly AudioFileReader audioReader = null;
-
-        public void Play()
+        audioReader = new AudioFileReader(audioPath);
+        if (audioReader == null)
         {
-            if (null == audioReader)
-            {
-                return;
-            }
-
-            if (waveOut.PlaybackState != PlaybackState.Playing)
-            {
-                waveOut.Play();
-            }
+            return;
         }
-        public void Stop()
+        waveOut = new WaveOut();
+        waveOut.Init(audioReader);
+        audioReader.Volume = volume * 0.01f;
+    }
+
+    private readonly WaveOut waveOut = null;
+    private readonly AudioFileReader audioReader = null;
+
+    public void Play()
+    {
+        if (null == audioReader)
         {
-            if (null == audioReader)
-            {
-                return;
-            }
-
-            if (waveOut.PlaybackState != PlaybackState.Stopped)
-            {
-                waveOut.Stop();
-                audioReader.Dispose();
-                waveOut.Dispose();
-            }
+            return;
         }
+
+        if (waveOut.PlaybackState == PlaybackState.Playing)
+        {
+            return;
+        }
+        waveOut.Play();
+    }
+    public void Stop()
+    {
+        if (null == audioReader)
+        {
+            return;
+        }
+
+        if (waveOut.PlaybackState == PlaybackState.Stopped)
+        {
+            return;
+        }
+        waveOut.Stop();
+        audioReader.Dispose();
+        waveOut.Dispose();
     }
 }
